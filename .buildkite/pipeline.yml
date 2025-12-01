@@ -19,24 +19,30 @@ steps:
       echo "--- :junit: Running unit tests"
       bazel test //src/test/... --test_output=errors --test_summary=detailed
 
-      echo "--- :bar_chart: Test results"
-      bazel test //src/test/... --test_output=errors || true
+      echo "--- :package: Copying test results"
+      mkdir -p test-results
+      counter=1
+      for file in $$(find -L bazel-testlogs -name "test.xml" -o -name "test.log" 2>/dev/null); do
+        basename=$$(basename "$$file")
+        ext="$${file##*.}"
+        cp "$$file" "test-results/$${basename%%.*}_$${counter}.$${ext}"
+        counter=$$((counter+1))
+      done
+      ls -la test-results/ || echo "No test results found"
     artifact_paths:
-      - "bazel-testlogs/**/test.log"
-      - "bazel-testlogs/**/test.xml"
+      - "test-results/*.log"
+      - "test-results/*.xml"
     plugins:
       # JUnit annotation plugin for inline test failure annotations
       - junit-annotate#v2.7.0:
-          artifacts: "bazel-testlogs/**/test.xml"
+          artifacts: "test-results/*.xml"
           context: "junit-annotations"
           fail-build-on-error: false
           report-slowest: 10
-          job-uuid-file-pattern: ".*/([^/]*)/test.xml"
       # Test Analytics - Track test trends over time
       - test-collector#v1.11.0:
-          files: "bazel-testlogs/**/test.xml"
+          files: "test-results/*.xml"
           format: "junit"
-          follow_symlinks: false
     agents:
       queue: "selfhosted"
       os: "linux"

@@ -1,3 +1,4 @@
 .bazelbsp/
 .idea/
 bazel-*
+test-results/
