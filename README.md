@@ -2,7 +2,7 @@
 
 My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemented in Java 21 with Bazel.
 
-[![Build Status](https://badge.buildkite.com/YOUR_BADGE_HERE.svg)](https://buildkite.com/YOUR_ORG/advent-of-code-2025)
+[![Build status](https://badge.buildkite.com/2f9c44cb4ac88cebbae4916853e755ee088a81e0c1c9adce7d.svg)](https://buildkite.com/bobcat/advent-of-code-2025)
 
 ## 🌟 Progress
 

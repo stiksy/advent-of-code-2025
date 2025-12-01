@@ -259,7 +259,8 @@ When you complete a new day, add it to the pipeline by uncommenting and updating
   artifact_paths:
     - "dayXX_output.txt"
   agents:
-    queue: "hosted-macos"
+    queue: "selfhosted"
+    os: "linux"
 ```
 
 ### Scripts

@@ -7,7 +7,8 @@ steps:
       echo "--- :package: Fetching dependencies"
       bazel fetch //...
     agents:
-      queue: "hosted-macos"
+      queue: "selfhosted"
+      os: "linux"
 
   - wait
 
@@ -23,7 +24,8 @@ steps:
       - "bazel-testlogs/**/test.log"
       - "bazel-testlogs/**/test.xml"
     agents:
-      queue: "hosted-macos"
+      queue: "selfhosted"
+      os: "linux"
 
   - wait
 
@@ -36,7 +38,8 @@ steps:
       echo "--- :white_check_mark: Build successful"
       bazel build //src/main/com/stiksy/aoc2025/... --show_result=10
     agents:
-      queue: "hosted-macos"
+      queue: "selfhosted"
+      os: "linux"
 
   - wait
 
@@ -52,7 +55,8 @@ steps:
     artifact_paths:
       - "day01_output.txt"
     agents:
-      queue: "hosted-macos"
+      queue: "selfhosted"
+      os: "linux"
 
   # Template for additional days - uncomment and modify as you complete more days
   # - label: ":christmas_tree: Day 2 Results"
@@ -81,4 +85,5 @@ steps:
       echo ""
       echo "Repository: https://github.com/stiksy/advent-of-code-2025"
     agents:
-      queue: "hosted-macos"
+      queue: "selfhosted"
+      os: "linux"
