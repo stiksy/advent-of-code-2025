@@ -1,0 +1,12 @@
+load("@rules_java//java:defs.bzl", "java_test")
+
+java_test(
+    name = "InputReaderTest",
+    srcs = ["InputReaderTest.java"],
+    test_class = "com.stiksy.aoc2025.util.InputReaderTest",
+    deps = [
+        "//src/main/com/stiksy/aoc2025/util:util",
+        "@maven//:junit_junit",
+    ],
+    resources = ["//src/test/resources/util:test_resources"],
+)
