@@ -1,0 +1,84 @@
+steps:
+  - label: ":bazel: Setup & Cache"
+    key: "setup"
+    command: |
+      echo "--- :bazel: Bazel version"
+      bazel version
+      echo "--- :package: Fetching dependencies"
+      bazel fetch //...
+    agents:
+      queue: "hosted-macos"
+
+  - wait
+
+  - label: ":test_tube: Run All Tests"
+    key: "tests"
+    command: |
+      echo "--- :junit: Running unit tests"
+      bazel test //src/test/... --test_output=errors --test_summary=detailed
+
+      echo "--- :bar_chart: Test results"
+      bazel test //src/test/... --test_output=errors || true
+    artifact_paths:
+      - "bazel-testlogs/**/test.log"
+      - "bazel-testlogs/**/test.xml"
+    agents:
+      queue: "hosted-macos"
+
+  - wait
+
+  - label: ":package: Build All Solutions"
+    key: "build"
+    command: |
+      echo "--- :bazel: Building all day solutions"
+      bazel build //src/main/com/stiksy/aoc2025/...
+
+      echo "--- :white_check_mark: Build successful"
+      bazel build //src/main/com/stiksy/aoc2025/... --show_result=10
+    agents:
+      queue: "hosted-macos"
+
+  - wait
+
+  - label: ":christmas_tree: Day 1 Results"
+    key: "day01-results"
+    command: |
+      echo "--- :runner: Running Day 1 solution"
+      bazel run //src/main/com/stiksy/aoc2025/day01:Day01 2>&1 | grep "Part" > day01_output.txt || true
+      cat day01_output.txt
+
+      echo "--- :memo: Creating annotation"
+      bash scripts/create_day_annotation.sh 1 day01_output.txt
+    artifact_paths:
+      - "day01_output.txt"
+    agents:
+      queue: "hosted-macos"
+
+  # Template for additional days - uncomment and modify as you complete more days
+  # - label: ":christmas_tree: Day 2 Results"
+  #   key: "day02-results"
+  #   command: |
+  #     echo "--- :runner: Running Day 2 solution"
+  #     bazel run //src/main/com/stiksy/aoc2025/day02:Day02 > day02_output.txt
+  #
+  #     echo "--- :memo: Creating annotation"
+  #     bash scripts/create_day_annotation.sh 2 day02_output.txt
+  #   artifact_paths:
+  #     - "day02_output.txt"
+  #   agents:
+  #     queue: "default"
+
+  - wait
+
+  - label: ":chart_with_upwards_trend: Final Summary"
+    command: |
+      echo "--- :trophy: Advent of Code 2025 Summary"
+      echo ""
+      echo "All tests passed! ✅"
+      echo "All solutions built successfully! ✅"
+      echo ""
+      echo "View annotations above for individual day results."
+      echo ""
+      echo "Repository: https://github.com/stiksy/advent-of-code-2025"
+    agents:
+      queue: "hosted-macos"

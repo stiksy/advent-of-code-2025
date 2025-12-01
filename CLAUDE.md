@@ -215,6 +215,58 @@ All code must have comprehensive unit tests:
 
 **Before committing any changes to utility classes, always run the full test suite** to ensure no existing solutions are broken.
 
+## CI/CD Pipeline
+
+### Buildkite Pipeline
+
+The repository includes a comprehensive Buildkite pipeline (`.buildkite/pipeline.yml`) that:
+
+1. **Setup & Cache**: Verifies Bazel installation and fetches dependencies
+2. **Run All Tests**: Executes unit tests, regression tests, and utility tests
+3. **Build All Solutions**: Compiles all day solutions
+4. **Day Results**: Runs each day's solution and creates annotations with:
+   - Link to the challenge on adventofcode.com
+   - Part 1 and Part 2 results
+   - Link to source code
+
+### Pipeline Features
+
+- **Automated Testing**: All tests run on every commit
+- **Build Verification**: Ensures all solutions compile
+- **Result Annotations**: Each day gets a beautiful annotation showing:
+  ```
+  🎄 Day X: Advent of Code Challenge
+  Results:
+  - Part 1: `answer` ⭐
+  - Part 2: `answer` ⭐
+  ```
+- **Artifacts**: Test logs and outputs are preserved
+
+### Adding New Days to Pipeline
+
+When you complete a new day, add it to the pipeline by uncommenting and updating the template in `.buildkite/pipeline.yml`:
+
+```yaml
+- label: ":christmas_tree: Day X Results"
+  key: "dayXX-results"
+  command: |
+    echo "--- :runner: Running Day X solution"
+    bazel run //src/main/com/stiksy/aoc2025/dayXX:DayXX 2>&1 | grep "Part" > dayXX_output.txt || true
+    cat dayXX_output.txt
+
+    echo "--- :memo: Creating annotation"
+    bash scripts/create_day_annotation.sh X dayXX_output.txt
+  artifact_paths:
+    - "dayXX_output.txt"
+  agents:
+    queue: "hosted-macos"
+```
+
+### Scripts
+
+- **`scripts/create_day_annotation.sh`**: Generates Buildkite annotations with challenge links and results
+- **`scripts/test_summary.sh`**: Creates test summary annotations
+
 ## Maven Dependencies
 
 To add new Maven dependencies, update the `maven.install()` call in MODULE.bazel with the artifact coordinates, then reference them in BUILD files as `@maven//:group_artifact` (replacing dots and colons with underscores).
