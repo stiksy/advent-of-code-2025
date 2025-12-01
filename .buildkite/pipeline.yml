@@ -33,16 +33,27 @@ steps:
       - "test-results/*.log"
       - "test-results/*.xml"
     plugins:
+      # Test Analytics - Track test trends over time
+      - test-collector#v1.11.0:
+          files: "test-results/*.xml"
+          format: "junit"
+    agents:
+      queue: "selfhosted"
+      os: "linux"
+
+  - label: ":memo: Annotate Test Results"
+    key: "test-annotations"
+    depends_on: "tests"
+    allow_dependency_failure: true
+    command: |
+      echo "--- :junit: Creating test annotations"
+    plugins:
       # JUnit annotation plugin for inline test failure annotations
       - junit-annotate#v2.7.0:
           artifacts: "test-results/*.xml"
           context: "junit-annotations"
           fail-build-on-error: false
           report-slowest: 10
-      # Test Analytics - Track test trends over time
-      - test-collector#v1.11.0:
-          files: "test-results/*.xml"
-          format: "junit"
     agents:
       queue: "selfhosted"
       os: "linux"
