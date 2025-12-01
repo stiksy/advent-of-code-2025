@@ -24,6 +24,19 @@ steps:
     artifact_paths:
       - "bazel-testlogs/**/test.log"
       - "bazel-testlogs/**/test.xml"
+    plugins:
+      # JUnit annotation plugin for inline test failure annotations
+      - junit-annotate#v2.7.0:
+          artifacts: "bazel-testlogs/**/test.xml"
+          context: "junit-annotations"
+          fail-build-on-error: false
+          report-slowest: 10
+          job-uuid-file-pattern: ".*/([^/]*)/test.xml"
+      # Test Analytics - Track test trends over time
+      - test-collector#v1.11.0:
+          files: "bazel-testlogs/**/test.xml"
+          format: "junit"
+          follow_symlinks: false
     agents:
       queue: "selfhosted"
       os: "linux"
