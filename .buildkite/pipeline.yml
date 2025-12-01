@@ -12,6 +12,7 @@ steps:
 
   - wait
 
+  # Run tests and build in parallel
   - label: ":test_tube: Run All Tests"
     key: "tests"
     command: |
@@ -27,8 +28,6 @@ steps:
       queue: "selfhosted"
       os: "linux"
 
-  - wait
-
   - label: ":package: Build All Solutions"
     key: "build"
     command: |
@@ -43,34 +42,17 @@ steps:
 
   - wait
 
-  - label: ":christmas_tree: Day 1 Results"
-    key: "day01-results"
-    command: |
-      echo "--- :runner: Running Day 1 solution"
-      bazel run //src/main/com/stiksy/aoc2025/day01:Day01 2>&1 | grep "Part" > day01_output.txt || true
-      cat day01_output.txt
-
-      echo "--- :memo: Creating annotation"
-      bash scripts/create_day_annotation.sh 1 day01_output.txt
-    artifact_paths:
-      - "day01_output.txt"
-    agents:
-      queue: "selfhosted"
-      os: "linux"
-
-  # Template for additional days - uncomment and modify as you complete more days
-  # - label: ":christmas_tree: Day 2 Results"
-  #   key: "day02-results"
-  #   command: |
-  #     echo "--- :runner: Running Day 2 solution"
-  #     bazel run //src/main/com/stiksy/aoc2025/day02:Day02 > day02_output.txt
-  #
-  #     echo "--- :memo: Creating annotation"
-  #     bash scripts/create_day_annotation.sh 2 day02_output.txt
-  #   artifact_paths:
-  #     - "day02_output.txt"
-  #   agents:
-  #     queue: "default"
+  # Dynamically generate steps for all completed days
+  - group: ":christmas_tree: Daily Challenge Results"
+    key: "daily-results"
+    steps:
+      - label: ":gear: Generate Day Steps"
+        command: |
+          echo "--- :mag: Discovering completed days"
+          bash scripts/generate_day_steps.sh | buildkite-agent pipeline upload
+        agents:
+          queue: "selfhosted"
+          os: "linux"
 
   - wait
 

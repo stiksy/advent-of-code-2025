@@ -231,8 +231,10 @@ The repository includes a comprehensive Buildkite pipeline (`.buildkite/pipeline
 
 ### Pipeline Features
 
+- **Parallel Execution**: Tests and builds run in parallel for faster feedback
 - **Automated Testing**: All tests run on every commit
 - **Build Verification**: Ensures all solutions compile
+- **Dynamic Day Discovery**: Automatically generates steps for all completed days
 - **Result Annotations**: Each day gets a beautiful annotation showing:
   ```
   🎄 Day X: Advent of Code Challenge
@@ -241,30 +243,22 @@ The repository includes a comprehensive Buildkite pipeline (`.buildkite/pipeline
   - Part 2: `answer` ⭐
   ```
 - **Artifacts**: Test logs and outputs are preserved
+- **Grouped Results**: All daily results appear in a single group
 
 ### Adding New Days to Pipeline
 
-When you complete a new day, add it to the pipeline by uncommenting and updating the template in `.buildkite/pipeline.yml`:
+**No manual pipeline updates needed!** The pipeline automatically discovers and runs all completed days.
 
-```yaml
-- label: ":christmas_tree: Day X Results"
-  key: "dayXX-results"
-  command: |
-    echo "--- :runner: Running Day X solution"
-    bazel run //src/main/com/stiksy/aoc2025/dayXX:DayXX 2>&1 | grep "Part" > dayXX_output.txt || true
-    cat dayXX_output.txt
+When you complete a new day:
+1. Create the solution in `src/main/com/stiksy/aoc2025/dayXX/`
+2. Commit and push your code
+3. The pipeline will automatically detect and run the new day
 
-    echo "--- :memo: Creating annotation"
-    bash scripts/create_day_annotation.sh X dayXX_output.txt
-  artifact_paths:
-    - "dayXX_output.txt"
-  agents:
-    queue: "selfhosted"
-    os: "linux"
-```
+The `scripts/generate_day_steps.sh` script scans for all `dayXX` directories and generates pipeline steps dynamically. All day results are grouped together for easy viewing.
 
 ### Scripts
 
+- **`scripts/generate_day_steps.sh`**: Automatically discovers completed days and generates pipeline steps
 - **`scripts/create_day_annotation.sh`**: Generates Buildkite annotations with challenge links and results
 - **`scripts/test_summary.sh`**: Creates test summary annotations
 
