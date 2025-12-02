@@ -1,0 +1,5 @@
+filegroup(
+    name = "input",
+    srcs = ["input.txt"],
+    visibility = ["//visibility:public"],
+)

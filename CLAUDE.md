@@ -153,6 +153,7 @@ When starting a new day's puzzle:
    - Verify with example tests
    - Run on actual input to get Part 1 answer
    - Implement Part 2, add example tests, and solve
+   - **If the input needs extra processing that might be useful in the future, create a helper class in the util package with comprehensive tests**
 
 6. **Add regression tests** (IMPORTANT):
    - Once you have confirmed correct answers for both parts, add regression tests:
