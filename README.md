@@ -6,9 +6,11 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 
 ## 🌟 Progress
 
-| Day | Challenge | Part 1 | Part 2 | Source |
-|-----|-----------|--------|--------|--------|
-| 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | ⭐ 1145 | ⭐ 6561 | [Day01.java](src/main/com/stiksy/aoc2025/day01/Day01.java) |
+| Day | Challenge | Part 1 | Part 2 | Source | Solution |
+|-----|-----------|--------|--------|--------|----------|
+| 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | ⭐ 1145 | ⭐ 6561 | [Day01.java](src/main/com/stiksy/aoc2025/day01/Day01.java) | [Explanation](docs/day01.md) |
+| 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | ⭐ 18467608014 | ⭐ 20043697201 | [Day02.java](src/main/com/stiksy/aoc2025/day02/Day02.java) | [Explanation](docs/day02.md) |
+| 3   | [Lobby](https://adventofcode.com/2025/day/3) | ⭐ 17330 | ⭐ 171518260283767 | [Day03.java](src/main/com/stiksy/aoc2025/day03/Day03.java) | [Explanation](docs/day03.md) |
 
 ## 🚀 Quick Start
 
@@ -108,4 +110,4 @@ See [CLAUDE.md](CLAUDE.md) for detailed development guidelines, including:
 
 ---
 
-⭐ **25 stars to collect!** Current progress: 2/50 ⭐
+⭐ **12 puzzles to solve!** Current progress: 6/24 ⭐

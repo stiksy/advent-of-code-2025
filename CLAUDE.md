@@ -177,6 +177,23 @@ When starting a new day's puzzle:
    - These tests prevent future refactoring or utility changes from breaking working solutions
    - Run `bazel test //src/test/com/stiksy/aoc2025/dayXX:DayXXTest` to verify all tests pass
 
+7. **Create solution documentation** (MANDATORY):
+   - After completing both parts, create `docs/dayXX.md` with comprehensive explanation
+   - Include the original puzzle text from https://adventofcode.com/2025/day/XX
+   - Provide detailed explanation of the solution approach for both parts
+   - Include code snippets with explanations where helpful
+   - Reference specific parts of the puzzle to aid comprehension
+   - Update `README.md` with a link to the solution documentation
+   - Documentation template structure:
+     - Title with day number and puzzle name
+     - Original puzzle text (Part 1 and Part 2)
+     - Solution approach explanation for Part 1
+     - Code walkthrough with snippets for Part 1
+     - Solution approach explanation for Part 2
+     - Code walkthrough with snippets for Part 2
+     - Key insights and algorithm complexity notes
+     - Final answers
+
 ## Development Workflow
 
 **Every solution must be properly documented with unit tests using the examples provided in the challenge description.** This ensures correctness before running on the actual puzzle input.
