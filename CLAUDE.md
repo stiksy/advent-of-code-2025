@@ -183,7 +183,6 @@ When starting a new day's puzzle:
    - Provide detailed explanation of the solution approach for both parts
    - Include code snippets with explanations where helpful
    - Reference specific parts of the puzzle to aid comprehension
-   - Update `README.md` with a link to the solution documentation
    - Documentation template structure:
      - Title with day number and puzzle name
      - Original puzzle text (Part 1 and Part 2)
@@ -193,6 +192,26 @@ When starting a new day's puzzle:
      - Code walkthrough with snippets for Part 2
      - Key insights and algorithm complexity notes
      - Final answers
+
+8. **Update GitHub Pages configuration** (MANDATORY):
+   - Add Jekyll front matter to `docs/dayXX.md`:
+     ```yaml
+     ---
+     layout: default
+     title: Day X - Puzzle Name
+     nav_order: X
+     ---
+     ```
+   - Update header links in `docs/dayXX.md`:
+     - Change relative source code links to absolute GitHub URLs
+     - Add "← Back to Home" link: `[← Back to Home](../index.html)`
+   - Update `index.md` to add the new day to the solutions table:
+     ```markdown
+     | X | [Puzzle Name](https://adventofcode.com/2025/day/X) | ⭐ ANSWER1 | ⭐ ANSWER2 | [📖 Read Solution](docs/dayXX.html) |
+     ```
+   - Update progress counter in `index.md`: `Current progress: X/24 ⭐`
+   - Update `README.md` with the same table row and progress counter
+   - The GitHub Pages site will automatically rebuild when changes are pushed to main
 
 ## Development Workflow
 
@@ -283,3 +302,29 @@ The `scripts/generate_day_steps.sh` script scans for all `dayXX` directories and
 ## Maven Dependencies
 
 To add new Maven dependencies, update the `maven.install()` call in MODULE.bazel with the artifact coordinates, then reference them in BUILD files as `@maven//:group_artifact` (replacing dots and colons with underscores).
+
+## GitHub Pages Documentation Site
+
+This project uses GitHub Pages to host comprehensive solution documentation.
+
+### Live Site
+
+Documentation is available at: **https://stiksy.github.io/advent-of-code-2025/**
+
+### Configuration Files
+
+- **`_config.yml`**: Jekyll configuration with Cayman theme, SEO settings, and navigation
+- **`index.md`**: Landing page with solutions table and navigation
+- **`docs/dayXX.md`**: Individual solution documentation pages with Jekyll front matter
+
+### Automatic Updates
+
+The GitHub Pages site automatically rebuilds when changes are pushed to the `main` branch. Changes typically appear within 1-2 minutes.
+
+### Setup Instructions
+
+For initial setup or troubleshooting, see `GITHUB_PAGES.md` for complete instructions on:
+- Enabling GitHub Pages in repository settings
+- Changing themes
+- Troubleshooting deployment issues
+- Adding new documentation pages
