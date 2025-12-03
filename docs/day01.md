@@ -1,6 +1,12 @@
+---
+layout: default
+title: Day 1 - Secret Entrance
+nav_order: 1
+---
+
 # Day 1: Secret Entrance
 
-[Puzzle Link](https://adventofcode.com/2025/day/1) | [Solution Code](../src/main/com/stiksy/aoc2025/day01/Day01.java)
+[Puzzle Link](https://adventofcode.com/2025/day/1) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day01/Day01.java) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 

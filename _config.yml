@@ -1,0 +1,51 @@
+# GitHub Pages Configuration for Advent of Code 2025
+
+title: Advent of Code 2025 Solutions
+description: Java solutions with comprehensive documentation for Advent of Code 2025
+author: Fernando Marquardt
+url: "https://stiksy.github.io"
+baseurl: "/advent-of-code-2025"
+
+# Theme
+theme: jekyll-theme-cayman
+# Alternatively, you can use: minima, jekyll-theme-minimal, jekyll-theme-slate
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name
+
+# Navigation
+header_pages:
+  - README.md
+  - docs/day01.md
+  - docs/day02.md
+  - docs/day03.md
+
+# Exclude from build
+exclude:
+  - .bazelrc
+  - .bazelversion
+  - MODULE.bazel
+  - WORKSPACE
+  - BUILD.bazel
+  - bazel-*
+  - src/
+  - scripts/
+  - .buildkite/
+  - .git/
+  - .gitignore
+  - CLAUDE.md
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap

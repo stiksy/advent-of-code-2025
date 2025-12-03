@@ -1,6 +1,12 @@
+---
+layout: default
+title: Day 2 - Gift Shop
+nav_order: 2
+---
+
 # Day 2: Gift Shop
 
-[Puzzle Link](https://adventofcode.com/2025/day/2) | [Solution Code](../src/main/com/stiksy/aoc2025/day02/Day02.java)
+[Puzzle Link](https://adventofcode.com/2025/day/2) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day02/Day02.java) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 

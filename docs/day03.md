@@ -1,6 +1,12 @@
+---
+layout: default
+title: Day 3 - Lobby
+nav_order: 3
+---
+
 # Day 3: Lobby
 
-[Puzzle Link](https://adventofcode.com/2025/day/3) | [Solution Code](../src/main/com/stiksy/aoc2025/day03/Day03.java)
+[Puzzle Link](https://adventofcode.com/2025/day/3) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day03/Day03.java) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 
