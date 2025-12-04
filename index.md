@@ -16,8 +16,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | ⭐ 1145 | ⭐ 6561 | [📖 Read Solution](docs/day01.html) |
 | 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | ⭐ 18467608014 | ⭐ 20043697201 | [📖 Read Solution](docs/day02.html) |
 | 3   | [Lobby](https://adventofcode.com/2025/day/3) | ⭐ 17330 | ⭐ 171518260283767 | [📖 Read Solution](docs/day03.html) |
+| 4   | [Printing Department](https://adventofcode.com/2025/day/4) | ⭐ 1553 | ⭐ 8442 | [📖 Read Solution](docs/day04.html) |
 
-⭐ **12 puzzles to solve!** Current progress: **6/24 ⭐**
+⭐ **12 puzzles to solve!** Current progress: **8/24 ⭐**
 
 ---
 
