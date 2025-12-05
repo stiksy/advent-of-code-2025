@@ -17,8 +17,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | ⭐ 18467608014 | ⭐ 20043697201 | [📖 Read Solution](docs/day02.html) |
 | 3   | [Lobby](https://adventofcode.com/2025/day/3) | ⭐ 17330 | ⭐ 171518260283767 | [📖 Read Solution](docs/day03.html) |
 | 4   | [Printing Department](https://adventofcode.com/2025/day/4) | ⭐ 1553 | ⭐ 8442 | [📖 Read Solution](docs/day04.html) |
+| 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | ⭐ 694 | ⭐ 352716206375547 | [📖 Read Solution](docs/day05.html) |
 
-⭐ **12 puzzles to solve!** Current progress: **8/24 ⭐**
+⭐ **13 puzzles to solve!** Current progress: **10/24 ⭐**
 
 ---
 

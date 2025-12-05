@@ -1,4 +1,5 @@
 .bazelbsp/
+.claude/
 .idea/
 bazel-*
 test-results/
