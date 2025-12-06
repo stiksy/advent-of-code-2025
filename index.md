@@ -13,14 +13,14 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 
 | Day | Challenge | Part 1 | Part 2 | Solution Documentation |
 |-----|-----------|--------|--------|------------------------|
-| 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | ⭐ 1145 | ⭐ 6561 | [📖 Read Solution](docs/day01.html) |
-| 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | ⭐ 18467608014 | ⭐ 20043697201 | [📖 Read Solution](docs/day02.html) |
-| 3   | [Lobby](https://adventofcode.com/2025/day/3) | ⭐ 17330 | ⭐ 171518260283767 | [📖 Read Solution](docs/day03.html) |
-| 4   | [Printing Department](https://adventofcode.com/2025/day/4) | ⭐ 1553 | ⭐ 8442 | [📖 Read Solution](docs/day04.html) |
-| 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | ⭐ 694 | ⭐ 352716206375547 | [📖 Read Solution](docs/day05.html) |
-| 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | ⭐ 5552221122013 | ⭐ 11371597126232 | [📖 Read Solution](docs/day06.html) |
+| 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | 1145 | 6561 | [📖 Read Solution](docs/day01.html) |
+| 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | 18467608014 | 20043697201 | [📖 Read Solution](docs/day02.html) |
+| 3   | [Lobby](https://adventofcode.com/2025/day/3) | 17330 | 171518260283767 | [📖 Read Solution](docs/day03.html) |
+| 4   | [Printing Department](https://adventofcode.com/2025/day/4) | 1553 | 8442 | [📖 Read Solution](docs/day04.html) |
+| 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | 694 | 352716206375547 | [📖 Read Solution](docs/day05.html) |
+| 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | 5552221122013 | 11371597126232 | [📖 Read Solution](docs/day06.html) |
 
-⭐ **13 puzzles to solve!** Current progress: **12/24 ⭐**
+⭐ **12 puzzles to solve!** Current progress: **12/24 ⭐**
 
 ---
 

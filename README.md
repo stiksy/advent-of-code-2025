@@ -8,12 +8,12 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 
 | Day | Challenge | Part 1 | Part 2 | Source | Solution |
 |-----|-----------|--------|--------|--------|----------|
-| 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | ⭐ 1145 | ⭐ 6561 | [Day01.java](src/main/com/stiksy/aoc2025/day01/Day01.java) | [Explanation](docs/day01.md) |
-| 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | ⭐ 18467608014 | ⭐ 20043697201 | [Day02.java](src/main/com/stiksy/aoc2025/day02/Day02.java) | [Explanation](docs/day02.md) |
-| 3   | [Lobby](https://adventofcode.com/2025/day/3) | ⭐ 17330 | ⭐ 171518260283767 | [Day03.java](src/main/com/stiksy/aoc2025/day03/Day03.java) | [Explanation](docs/day03.md) |
-| 4   | [Printing Department](https://adventofcode.com/2025/day/4) | ⭐ 1553 | ⭐ 8442 | [Day04.java](src/main/com/stiksy/aoc2025/day04/Day04.java) | [Explanation](docs/day04.md) |
-| 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | ⭐ 694 | ⭐ 352716206375547 | [Day05.java](src/main/com/stiksy/aoc2025/day05/Day05.java) | [Explanation](docs/day05.md) |
-| 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | ⭐ 5552221122013 | ⭐ 11371597126232 | [Day06.java](src/main/com/stiksy/aoc2025/day06/Day06.java) | [Explanation](docs/day06.md) |
+| 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | 1145 | 6561 | [Day01.java](src/main/com/stiksy/aoc2025/day01/Day01.java) | [Explanation](docs/day01.md) |
+| 2   | [Gift Shop](https://adventofcode.com/2025/day/2) | 18467608014 | 20043697201 | [Day02.java](src/main/com/stiksy/aoc2025/day02/Day02.java) | [Explanation](docs/day02.md) |
+| 3   | [Lobby](https://adventofcode.com/2025/day/3) | 17330 | 171518260283767 | [Day03.java](src/main/com/stiksy/aoc2025/day03/Day03.java) | [Explanation](docs/day03.md) |
+| 4   | [Printing Department](https://adventofcode.com/2025/day/4) | 1553 | 8442 | [Day04.java](src/main/com/stiksy/aoc2025/day04/Day04.java) | [Explanation](docs/day04.md) |
+| 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | 694 | 352716206375547 | [Day05.java](src/main/com/stiksy/aoc2025/day05/Day05.java) | [Explanation](docs/day05.md) |
+| 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | 5552221122013 | 11371597126232 | [Day06.java](src/main/com/stiksy/aoc2025/day06/Day06.java) | [Explanation](docs/day06.md) |
 
 ## 🚀 Quick Start
 
