@@ -1,0 +1,11 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+java_binary(
+    name = "Day08",
+    main_class = "com.stiksy.aoc2025.day08.Day08",
+    srcs = ["Day08.java"],
+    resources = ["//src/main/resources/day08:input"],
+    deps = ["//src/main/com/stiksy/aoc2025/util:util"],
+)

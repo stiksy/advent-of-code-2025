@@ -14,6 +14,8 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 4   | [Printing Department](https://adventofcode.com/2025/day/4) | 1553 | 8442 | [Day04.java](src/main/com/stiksy/aoc2025/day04/Day04.java) | [Explanation](docs/day04.md) |
 | 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | 694 | 352716206375547 | [Day05.java](src/main/com/stiksy/aoc2025/day05/Day05.java) | [Explanation](docs/day05.md) |
 | 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | 5552221122013 | 11371597126232 | [Day06.java](src/main/com/stiksy/aoc2025/day06/Day06.java) | [Explanation](docs/day06.md) |
+| 7   | [Laboratories](https://adventofcode.com/2025/day/7) | 1570 | 15118009521693 | [Day07.java](src/main/com/stiksy/aoc2025/day07/Day07.java) | [Explanation](docs/day07.md) |
+| 8   | [Playground](https://adventofcode.com/2025/day/8) | 96672 | 22517595 | [Day08.java](src/main/com/stiksy/aoc2025/day08/Day08.java) | [Explanation](docs/day08.md) |
 
 ## 🚀 Quick Start
 
@@ -113,4 +115,4 @@ See [CLAUDE.md](CLAUDE.md) for detailed development guidelines, including:
 
 ---
 
-⭐ **13 puzzles to solve!** Current progress: 12/24 ⭐
+⭐ **16 puzzles solved!** Current progress: 16/24 ⭐

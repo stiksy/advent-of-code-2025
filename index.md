@@ -19,8 +19,10 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 4   | [Printing Department](https://adventofcode.com/2025/day/4) | 1553 | 8442 | [📖 Read Solution](docs/day04.html) |
 | 5   | [Cafeteria](https://adventofcode.com/2025/day/5) | 694 | 352716206375547 | [📖 Read Solution](docs/day05.html) |
 | 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | 5552221122013 | 11371597126232 | [📖 Read Solution](docs/day06.html) |
+| 7   | [Laboratories](https://adventofcode.com/2025/day/7) | 1570 | 15118009521693 | [📖 Read Solution](docs/day07.html) |
+| 8   | [Playground](https://adventofcode.com/2025/day/8) | 96672 | 22517595 | [📖 Read Solution](docs/day08.html) |
 
-⭐ **12 puzzles to solve!** Current progress: **12/24 ⭐**
+⭐ **16 puzzles solved!** Current progress: **16/24 ⭐**
 
 ---
 
