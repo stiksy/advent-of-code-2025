@@ -21,8 +21,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 6   | [Trash Compactor](https://adventofcode.com/2025/day/6) | 5552221122013 | 11371597126232 | [📖 Read Solution](docs/day06.html) |
 | 7   | [Laboratories](https://adventofcode.com/2025/day/7) | 1570 | 15118009521693 | [📖 Read Solution](docs/day07.html) |
 | 8   | [Playground](https://adventofcode.com/2025/day/8) | 96672 | 22517595 | [📖 Read Solution](docs/day08.html) |
+| 9   | [Movie Theater](https://adventofcode.com/2025/day/9) | 4781546175 | 1573359081 | [📖 Read Solution](docs/day09.html) |
 
-⭐ **16 puzzles solved!** Current progress: **16/24 ⭐**
+⭐ **18 puzzles solved!** Current progress: **18/24 ⭐**
 
 ---
 
