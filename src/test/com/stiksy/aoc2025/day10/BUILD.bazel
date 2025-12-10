@@ -1,0 +1,12 @@
+load("@rules_java//java:defs.bzl", "java_test")
+
+java_test(
+    name = "Day10Test",
+    srcs = ["Day10Test.java"],
+    test_class = "com.stiksy.aoc2025.day10.Day10Test",
+    deps = [
+        "//src/main/com/stiksy/aoc2025/day10:Day10",
+        "//src/main/com/stiksy/aoc2025/util:util",
+        "@maven//:junit_junit",
+    ],
+)

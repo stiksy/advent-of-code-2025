@@ -22,8 +22,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 7   | [Laboratories](https://adventofcode.com/2025/day/7) | 1570 | 15118009521693 | [📖 Read Solution](docs/day07.html) |
 | 8   | [Playground](https://adventofcode.com/2025/day/8) | 96672 | 22517595 | [📖 Read Solution](docs/day08.html) |
 | 9   | [Movie Theater](https://adventofcode.com/2025/day/9) | 4781546175 | 1573359081 | [📖 Read Solution](docs/day09.html) |
+| 10  | [Factory](https://adventofcode.com/2025/day/10) | 375 | 15377 | [📖 Read Solution](docs/day10.html) |
 
-⭐ **18 puzzles solved!** Current progress: **18/24 ⭐**
+⭐ **20 puzzles solved!** Current progress: **20/24 ⭐**
 
 ---
 
