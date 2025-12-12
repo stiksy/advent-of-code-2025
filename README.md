@@ -18,8 +18,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 8   | [Playground](https://adventofcode.com/2025/day/8) | 96672 | 22517595 | [Day08.java](src/main/com/stiksy/aoc2025/day08/Day08.java) | [Explanation](docs/day08.md) |
 | 9   | [Movie Theater](https://adventofcode.com/2025/day/9) | 4781546175 | 1573359081 | [Day09.java](src/main/com/stiksy/aoc2025/day09/Day09.java) | [Explanation](docs/day09.md) |
 | 10  | [Factory](https://adventofcode.com/2025/day/10) | 375 | 15377 | [Day10.java](src/main/com/stiksy/aoc2025/day10/Day10.java) | [Explanation](docs/day10.md) |
+| 11  | [Reactor](https://adventofcode.com/2025/day/11) | 674 | 438314708837664 | [Day11.java](src/main/com/stiksy/aoc2025/day11/Day11.java) | [Explanation](docs/day11.md) |
 
-⭐ **20 puzzles solved!** Current progress: **20/24 ⭐**
+⭐ **22 puzzles solved!** Current progress: **22/24 ⭐**
 
 ## 🚀 Quick Start
 
