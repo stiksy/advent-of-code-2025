@@ -6,7 +6,7 @@ nav_order: 3
 
 # Day 3: Lobby
 
-[Puzzle Link](https://adventofcode.com/2025/day/3) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day03/Day03.java) | [← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/3) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day03/Day03.java) | [🎨 Interactive Visualization](visualizations/day03-visualization.html) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 
@@ -74,6 +74,19 @@ Now, the joltages are much larger:
 - In `818181911112111`, the joltage **888911112111** is produced by turning on everything except some 1s near the front
 
 The total output joltage is now much larger: 987654321111 + 811111111119 + 434234234278 + 888911112111 = **3121910778619**
+
+## Interactive Visualization
+
+Want to see the battery selection algorithm in action? Check out the [interactive visualization](visualizations/day03-visualization.html) that lets you:
+- Watch the greedy algorithm select batteries step-by-step
+- Toggle between Part 1 (2 batteries) and Part 2 (12 batteries) modes
+- See batteries highlighted as they're considered and selected
+- Visualize the search window and selection process
+- Enter custom battery banks to test
+- Adjust animation speed
+- Track selection progress in real-time
+
+The visualization clearly demonstrates how Part 1 exhaustively tries all pairs while Part 2 uses an efficient greedy approach to maximize the result.
 
 ## Solution Approach
 

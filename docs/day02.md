@@ -6,7 +6,7 @@ nav_order: 2
 
 # Day 2: Gift Shop
 
-[Puzzle Link](https://adventofcode.com/2025/day/2) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day02/Day02.java) | [← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/2) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day02/Day02.java) | [🎨 Interactive Visualization](visualizations/day02-visualization.html) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 
@@ -65,6 +65,18 @@ Examples of invalid IDs:
 - `2121212118-2121212124` now has one invalid ID: **2121212121** (new!)
 
 Adding up all the invalid IDs in this example produces **4174379265**.
+
+## Interactive Visualization
+
+Want to see pattern detection in action? Check out the [interactive visualization](visualizations/day02-visualization.html) that lets you:
+- Watch numbers being checked for repeating patterns in real-time
+- Toggle between Part 1 and Part 2 detection modes
+- See patterns highlighted visually with different colors
+- Enter custom ranges to test
+- Adjust animation speed
+- Track statistics (numbers checked, invalid IDs found, sum)
+
+The visualization clearly shows the difference between Part 1 (exactly 2 repetitions) and Part 2 (at least 2 repetitions) detection algorithms.
 
 ## Solution Approach
 

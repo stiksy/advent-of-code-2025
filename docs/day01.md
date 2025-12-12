@@ -6,7 +6,7 @@ nav_order: 1
 
 # Day 1: Secret Entrance
 
-[Puzzle Link](https://adventofcode.com/2025/day/1) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day01/Day01.java) | [← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/1) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day01/Day01.java) | [🎨 Interactive Visualization](visualizations/day01-visualization.html) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 
@@ -64,6 +64,18 @@ The dial points at zero during these rotations:
 In this example, the dial points at 0 three times at the end of a rotation, plus three more times during a rotation. So, in this example, the new password would be **6**.
 
 **Be careful:** If the dial were pointing at 50, a single rotation like **R1000** would cause the dial to point at 0 ten times before returning back to 50!
+
+## Interactive Visualization
+
+Want to see the dial in action? Check out the [interactive visualization](visualizations/day01-visualization.html) that lets you:
+- Watch the dial rotate step-by-step through each rotation
+- Toggle between Part 1 and Part 2 modes to see the different counting methods
+- Step forward/backward through the rotations
+- Auto-play through the entire sequence
+- Load the example data or actual puzzle input
+- See a history of all rotations and zero crossings
+
+The visualization clearly shows the difference between Part 1 (counting only when the dial lands on 0) and Part 2 (counting every time the dial passes through 0).
 
 ## Solution Approach
 

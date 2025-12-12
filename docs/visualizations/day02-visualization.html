@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 - Gift Shop Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 5px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            width: fit-content;
+        }
+
+        .mode-toggle button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .mode-toggle button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .display-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .number-display {
+            font-size: 3.5em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            letter-spacing: 8px;
+        }
+
+        .digit {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 0 2px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .digit.pattern1 {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .digit.pattern2 {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .digit.pattern3 {
+            background: #95e1d3;
+            color: #333;
+        }
+
+        .result-badge {
+            font-size: 1.3em;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .result-badge.invalid {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .result-badge.valid {
+            background: #51cf66;
+            color: white;
+        }
+
+        .pattern-info {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #dee2e6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .input-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .input-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .range-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+        }
+
+        .example-list {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .example-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .speed-control label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .speed-control input[type="range"] {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎁 Day 2: Gift Shop</h1>
+        <p class="subtitle">Pattern Detection Visualization</p>
+
+        <div class="mode-toggle">
+            <button class="active" onclick="setMode('part1')">Part 1: Exactly 2 Repeats</button>
+            <button onclick="setMode('part2')">Part 2: At Least 2 Repeats</button>
+        </div>
+
+        <div class="display-area">
+            <div class="number-display" id="numberDisplay">
+                <span id="digitContainer">Ready</span>
+            </div>
+            <div class="result-badge" id="resultBadge" style="display: none;"></div>
+            <div class="pattern-info" id="patternInfo"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Current Range</div>
+                <div class="stat-value" id="rangeDisplay" style="font-size: 1.2em;">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Numbers Checked</div>
+                <div class="stat-value" id="checkedCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Invalid IDs Found</div>
+                <div class="stat-value" id="invalidCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Sum of Invalid IDs</div>
+                <div class="stat-value" id="sumDisplay" style="font-size: 1.3em;">0</div>
+            </div>
+        </div>
+
+        <div class="speed-control">
+            <label for="speedSlider">Animation Speed:</label>
+            <input type="range" id="speedSlider" min="10" max="500" value="100" step="10">
+            <span id="speedValue">100ms</span>
+        </div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="startAnimation()">▶ Start</button>
+            <button class="btn-secondary" onclick="stopAnimation()">⏸ Pause</button>
+            <button class="btn-secondary" onclick="reset()">⟲ Reset</button>
+        </div>
+
+        <div class="input-section">
+            <h3>Test Range</h3>
+            <input type="text" id="rangeInput" class="range-input" placeholder="e.g., 11-22 or 95-115">
+            <div class="example-list">
+                <button class="example-btn" onclick="loadExample('11-22')">11-22</button>
+                <button class="example-btn" onclick="loadExample('95-115')">95-115</button>
+                <button class="example-btn" onclick="loadExample('998-1012')">998-1012</button>
+                <button class="example-btn" onclick="loadExample('222220-222224')">222220-222224</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let mode = 'part1';
+        let animationSpeed = 100;
+        let isRunning = false;
+        let currentNumber = 0;
+        let rangeStart = 0;
+        let rangeEnd = 0;
+        let checkedCount = 0;
+        let invalidCount = 0;
+        let sumInvalid = 0;
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.mode-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            reset();
+        }
+
+        function loadExample(range) {
+            document.getElementById('rangeInput').value = range;
+            const [start, end] = range.split('-').map(Number);
+            rangeStart = start;
+            rangeEnd = end;
+            document.getElementById('rangeDisplay').textContent = range;
+            reset();
+        }
+
+        function parseRange() {
+            const input = document.getElementById('rangeInput').value.trim();
+            if (!input) return false;
+
+            const [start, end] = input.split('-').map(Number);
+            if (isNaN(start) || isNaN(end)) return false;
+
+            rangeStart = start;
+            rangeEnd = end;
+            currentNumber = start;
+            document.getElementById('rangeDisplay').textContent = input;
+            return true;
+        }
+
+        function reset() {
+            stopAnimation();
+            if (parseRange()) {
+                currentNumber = rangeStart;
+                checkedCount = 0;
+                invalidCount = 0;
+                sumInvalid = 0;
+                updateStats();
+                displayNumber(currentNumber, false, null);
+            } else {
+                document.getElementById('digitContainer').textContent = 'Enter a range';
+                document.getElementById('resultBadge').style.display = 'none';
+            }
+        }
+
+        function isInvalidPart1(num) {
+            const str = String(num);
+            const len = str.length;
+
+            if (len % 2 !== 0) return { invalid: false };
+
+            const half = len / 2;
+            const first = str.substring(0, half);
+            const second = str.substring(half);
+
+            if (first === second) {
+                return { invalid: true, pattern: first, repetitions: 2 };
+            }
+            return { invalid: false };
+        }
+
+        function isInvalidPart2(num) {
+            const str = String(num);
+            const len = str.length;
+
+            for (let patternLen = 1; patternLen <= len / 2; patternLen++) {
+                if (len % patternLen !== 0) continue;
+
+                const pattern = str.substring(0, patternLen);
+                let isRepeated = true;
+
+                for (let i = patternLen; i < len; i += patternLen) {
+                    const chunk = str.substring(i, i + patternLen);
+                    if (chunk !== pattern) {
+                        isRepeated = false;
+                        break;
+                    }
+                }
+
+                if (isRepeated) {
+                    return {
+                        invalid: true,
+                        pattern: pattern,
+                        repetitions: len / patternLen
+                    };
+                }
+            }
+            return { invalid: false };
+        }
+
+        function displayNumber(num, isInvalid, result) {
+            const container = document.getElementById('digitContainer');
+            const badge = document.getElementById('resultBadge');
+            const info = document.getElementById('patternInfo');
+            const str = String(num);
+
+            container.innerHTML = '';
+
+            if (isInvalid && result) {
+                // Highlight pattern
+                const patternLen = result.pattern.length;
+                const colors = ['pattern1', 'pattern2', 'pattern3'];
+
+                for (let i = 0; i < str.length; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'digit';
+                    span.textContent = str[i];
+
+                    const patternIdx = Math.floor(i / patternLen) % colors.length;
+                    span.classList.add(colors[patternIdx]);
+
+                    container.appendChild(span);
+                }
+
+                badge.textContent = '❌ INVALID';
+                badge.className = 'result-badge invalid';
+                badge.style.display = 'block';
+
+                info.textContent = `Pattern "${result.pattern}" repeated ${result.repetitions} times`;
+            } else {
+                // No highlighting
+                for (let i = 0; i < str.length; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'digit';
+                    span.textContent = str[i];
+                    container.appendChild(span);
+                }
+
+                if (isInvalid === false) {
+                    badge.textContent = '✓ Valid';
+                    badge.className = 'result-badge valid';
+                    badge.style.display = 'block';
+                    info.textContent = 'No repeating pattern detected';
+                } else {
+                    badge.style.display = 'none';
+                    info.textContent = '';
+                }
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('checkedCount').textContent = checkedCount;
+            document.getElementById('invalidCount').textContent = invalidCount;
+            document.getElementById('sumDisplay').textContent = sumInvalid.toLocaleString();
+        }
+
+        async function startAnimation() {
+            if (!parseRange()) {
+                alert('Please enter a valid range (e.g., 11-22)');
+                return;
+            }
+
+            if (isRunning) return;
+            isRunning = true;
+
+            while (isRunning && currentNumber <= rangeEnd) {
+                const result = mode === 'part1' ?
+                    isInvalidPart1(currentNumber) :
+                    isInvalidPart2(currentNumber);
+
+                displayNumber(currentNumber, result.invalid, result);
+
+                checkedCount++;
+                if (result.invalid) {
+                    invalidCount++;
+                    sumInvalid += currentNumber;
+                }
+
+                updateStats();
+
+                await new Promise(resolve => setTimeout(resolve, animationSpeed));
+
+                currentNumber++;
+            }
+
+            if (currentNumber > rangeEnd) {
+                isRunning = false;
+            }
+        }
+
+        function stopAnimation() {
+            isRunning = false;
+        }
+
+        // Speed control
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedValue').textContent = animationSpeed + 'ms';
+        });
+
+        // Initialize
+        loadExample('11-22');
+    </script>
+</body>
+</html>
