@@ -50,6 +50,13 @@ Each day's solution includes:
 
 Click on the "📖 Read Solution" links above to dive into each day's detailed explanation!
 
+## ⚡ Performance Analysis
+
+Curious about how fast these solutions run? Check out the comprehensive [Performance Analysis](docs/performance.html) with detailed benchmarks for all solutions, including:
+- Execution time statistics (min, max, average, median)
+- Performance comparisons and visualizations
+- Solution categorization by speed
+
 ## 💻 Source Code
 
 Visit the [GitHub repository](https://github.com/stiksy/advent-of-code-2025) to see the full source code, including:

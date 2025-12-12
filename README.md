@@ -105,6 +105,20 @@ Each day's solution gets a beautiful annotation showing:
 - Part 1 and Part 2 results
 - Link to source code
 
+## ⚡ Performance
+
+Comprehensive performance benchmarks are available for all solutions. Each solution has been tested with 1,000 iterations to provide accurate statistics.
+
+```bash
+# Run performance benchmarks (~15-30 minutes)
+./scripts/performance_test.sh
+
+# Generate performance documentation
+python3 scripts/generate_performance_doc.py
+```
+
+See [Performance Analysis](docs/performance.md) for detailed results and comparisons.
+
 ## 📝 Development
 
 See [CLAUDE.md](CLAUDE.md) for detailed development guidelines, including:
