@@ -21,7 +21,7 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 11  | [Reactor](https://adventofcode.com/2025/day/11) | 674 | 438314708837664 | [Day11.java](src/main/com/stiksy/aoc2025/day11/Day11.java) | [Explanation](docs/day11.md) |
 | 12  | [Christmas Tree Farm](https://adventofcode.com/2025/day/12) | 577 | N/A | [Day12.java](src/main/com/stiksy/aoc2025/day12/Day12.java) | [Explanation](docs/day12.md) |
 
-⭐ **23 puzzles solved!** Current progress: **23/24 ⭐**
+⭐ **23 puzzles solved!** Current progress: **23/23 ⭐** (Complete!)
 
 ## 🚀 Quick Start
 

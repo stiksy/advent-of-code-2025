@@ -26,7 +26,7 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 11  | [Reactor](https://adventofcode.com/2025/day/11) | 674 | 438314708837664 | [📖 Read Solution](docs/day11.html) |
 | 12  | [Christmas Tree Farm](https://adventofcode.com/2025/day/12) | 577 | N/A | [📖 Read Solution](docs/day12.html) |
 
-⭐ **23 puzzles solved!** Current progress: **23/24 ⭐**
+⭐ **23 puzzles solved!** Current progress: **23/23 ⭐** (Complete!)
 
 ---
 
