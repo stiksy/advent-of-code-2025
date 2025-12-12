@@ -72,11 +72,11 @@ nav_order: 13
 
 # Performance Analysis
 
-Benchmark results for all Advent of Code 2025 solutions. Each solution was executed **1,000 times** to gather accurate performance statistics.
+Benchmark results for all Advent of Code 2025 solutions. Each solution was executed **100 times** to gather accurate performance statistics.
 
 ## Test Environment
 
-- **Iterations per solution**: 1,000
+- **Iterations per solution**: 100
 - **JVM Warm-up**: 10 iterations before measurement
 - **Language**: Java 21
 - **Build System**: Bazel
@@ -119,17 +119,20 @@ Benchmark results for all Advent of Code 2025 solutions. Each solution was execu
         name = challenge_names.get(d['day'], f"Day {d['day']}")
         md_content += f"| {d['day']:2d} | {name:20s} | {d['avg']:6.0f}ms | {d['min']:6.0f}ms | {d['max']:6.0f}ms | {d['median']:6.0f}ms | {d['p95']:6.0f}ms | {d['stddev']:6.2f}ms |\n"
 
-    md_content += f"""
+    md_content += """
 ### Visual Performance Comparison
 
 Average execution time per solution (relative scale):
 
+```
 """
 
     # Add visual bars
     for d in days:
         bar = create_bar_chart(d['avg'], max_avg, width=50)
         md_content += f"Day {d['day']:2d}: {bar} {format_time(d['avg'])}\n"
+
+    md_content += "```"
 
     md_content += """
 
@@ -174,7 +177,7 @@ The performance benchmark follows these steps:
 
 1. **Build Phase**: All solutions are compiled using Bazel before testing begins
 2. **JVM Warm-up**: Each solution runs 10 times to allow JIT compilation and optimization
-3. **Measurement**: Each solution executes 1,000 times with high-precision timing (nanosecond accuracy)
+3. **Measurement**: Each solution executes 100 times with high-precision timing (nanosecond accuracy)
 4. **Statistics**: Min, max, average, median, 95th percentile, and standard deviation are calculated
 5. **Verification**: Final run output is captured to verify correct answers
 
