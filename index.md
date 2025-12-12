@@ -24,8 +24,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 9   | [Movie Theater](https://adventofcode.com/2025/day/9) | 4781546175 | 1573359081 | [📖 Read Solution](docs/day09.html) |
 | 10  | [Factory](https://adventofcode.com/2025/day/10) | 375 | 15377 | [📖 Read Solution](docs/day10.html) |
 | 11  | [Reactor](https://adventofcode.com/2025/day/11) | 674 | 438314708837664 | [📖 Read Solution](docs/day11.html) |
+| 12  | [Christmas Tree Farm](https://adventofcode.com/2025/day/12) | 577 | N/A | [📖 Read Solution](docs/day12.html) |
 
-⭐ **22 puzzles solved!** Current progress: **22/24 ⭐**
+⭐ **23 puzzles solved!** Current progress: **23/24 ⭐**
 
 ---
 

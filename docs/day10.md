@@ -125,8 +125,11 @@ for (int mask = 0; mask < (1 << numFreeVars); mask++) {
         solution[pivotCol[row]] = val;
     }
 
-    // Count and track minimum
-    int count = Arrays.stream(solution).filter(b -> b).count();
+    // Count button presses
+    int count = 0;
+    for (boolean pressed : solution) {
+        if (pressed) count++;
+    }
     minPresses = Math.min(minPresses, count);
 }
 ```

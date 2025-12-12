@@ -19,8 +19,9 @@ My solutions for [Advent of Code 2025](https://adventofcode.com/2025) implemente
 | 9   | [Movie Theater](https://adventofcode.com/2025/day/9) | 4781546175 | 1573359081 | [Day09.java](src/main/com/stiksy/aoc2025/day09/Day09.java) | [Explanation](docs/day09.md) |
 | 10  | [Factory](https://adventofcode.com/2025/day/10) | 375 | 15377 | [Day10.java](src/main/com/stiksy/aoc2025/day10/Day10.java) | [Explanation](docs/day10.md) |
 | 11  | [Reactor](https://adventofcode.com/2025/day/11) | 674 | 438314708837664 | [Day11.java](src/main/com/stiksy/aoc2025/day11/Day11.java) | [Explanation](docs/day11.md) |
+| 12  | [Christmas Tree Farm](https://adventofcode.com/2025/day/12) | 577 | N/A | [Day12.java](src/main/com/stiksy/aoc2025/day12/Day12.java) | [Explanation](docs/day12.md) |
 
-⭐ **22 puzzles solved!** Current progress: **22/24 ⭐**
+⭐ **23 puzzles solved!** Current progress: **23/24 ⭐**
 
 ## 🚀 Quick Start
 
@@ -117,7 +118,3 @@ See [CLAUDE.md](CLAUDE.md) for detailed development guidelines, including:
 
 - [Advent of Code](https://adventofcode.com/) by Eric Wastl
 - Solutions developed with assistance from [Claude Code](https://claude.com/code)
-
----
-
-⭐ **18 puzzles solved!** Current progress: 18/24 ⭐
