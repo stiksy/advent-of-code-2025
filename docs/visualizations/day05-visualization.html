@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5 - Cafeteria Visualization</title>
+    <link rel="stylesheet" href="visualization-styles.css">
+    <style>
+        /* Day 5 Specific Styles */
+
+        .timeline-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 350px;
+        }
+
+        .timeline {
+            position: relative;
+            height: 40px;
+            background: linear-gradient(to right, #ecf0f1 0%, #bdc3c7 100%);
+            border-radius: 20px;
+            margin: 40px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .range-bar {
+            position: absolute;
+            height: 100%;
+            border-radius: 20px;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .range-bar.original {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            opacity: 0.8;
+        }
+
+        .range-bar.merged {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            opacity: 0.9;
+        }
+
+        .range-bar.merging {
+            animation: merge-pulse 0.6s ease-in-out;
+        }
+
+        @keyframes merge-pulse {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.3); box-shadow: 0 4px 12px rgba(46, 204, 113, 0.6); }
+        }
+
+        .ingredient-marker {
+            position: absolute;
+            width: 3px;
+            height: 60px;
+            top: -10px;
+            background: #e74c3c;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .ingredient-marker::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -3px;
+            width: 9px;
+            height: 9px;
+            background: #e74c3c;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .ingredient-marker.fresh {
+            background: #2ecc71;
+        }
+
+        .ingredient-marker.fresh::before {
+            background: #2ecc71;
+        }
+
+        .ingredient-marker.checking {
+            animation: check-pulse 0.5s ease-in-out;
+        }
+
+        @keyframes check-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+
+        .marker-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            color: #666;
+            white-space: nowrap;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .range-list {
+            margin: 20px 0;
+            max-height: 150px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .range-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            margin: 4px 0;
+            background: #ecf0f1;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .range-item.highlight {
+            background: #3498db;
+            color: white;
+            animation: highlight-flash 0.5s;
+        }
+
+        @keyframes highlight-flash {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .scale-info {
+            text-align: center;
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Day 5: Cafeteria</h1>
+        <p class="subtitle">Fresh Ingredient Range Visualization</p>
+
+        <div class="mode-toggle">
+            <button class="active" onclick="setMode('part1')">Part 1: Check Ingredients</button>
+            <button onclick="setMode('part2')">Part 2: Merge Ranges</button>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            Click "Run Algorithm" to start visualization
+        </div>
+
+        <div class="timeline-container">
+            <h3 style="text-align: center; color: #555; margin-bottom: 20px;">
+                Ingredient ID Timeline (Scaled Visualization)
+            </h3>
+            <div class="timeline" id="timeline"></div>
+            <div class="scale-info" id="scaleInfo">
+                Values scaled for visualization - actual IDs range from 4.7T to 562.3T
+            </div>
+        </div>
+
+        <div class="range-list" id="rangeList"></div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Ranges</div>
+                <div class="stat-value" id="totalRanges">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Ingredients Checked</div>
+                <div class="stat-value" id="checkedCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Fresh Count</div>
+                <div class="stat-value" id="freshCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Merged Ranges</div>
+                <div class="stat-value" id="mergedCount">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Fresh IDs</div>
+                <div class="stat-value" id="totalFreshIds">-</div>
+            </div>
+        </div>
+
+        <div class="speed-control">
+            <label for="speedSlider">Speed:</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="5">
+            <span id="speedLabel">●●●●●</span>
+        </div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="runAlgorithm()">▶ Run Algorithm</button>
+            <button class="btn-secondary" onclick="reset()">⟲ Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // Subset of actual puzzle input (using first 10 ranges and 20 ingredient IDs)
+        const RANGES = [
+            [336566098811319, 337408802399429],
+            [474487701923786, 477321984437101],
+            [249959673124024, 250732034749615],
+            [485427730042231, 491324341674635],
+            [215508793567017, 216741641602480],
+            [208521390563908, 208521390563908],
+            [65963085377460, 68562867264572],
+            [403203599110022, 407379888162766],
+            [407379888162768, 410316986824905],
+            [557257867290148, 562274260919735]
+        ];
+
+        const INGREDIENT_IDS = [
+            230402443778202, 21580645493481, 368757958942253, 370883264225250,
+            184472463065710, 412312621329505, 530413138925573, 335247909147000,
+            55134538781151, 499487718245898, 262642348681868, 292963800734937,
+            321157736220084, 57567139922162, 355813209010472, 103413848483305,
+            501004126771822, 497275254033709, 544194406272457, 147304910612444
+        ];
+
+        let mode = 'part1';
+        let animationSpeed = 600;
+        let isRunning = false;
+
+        // Find min/max for scaling
+        let globalMin = Infinity;
+        let globalMax = -Infinity;
+
+        for (const [start, end] of RANGES) {
+            globalMin = Math.min(globalMin, start);
+            globalMax = Math.max(globalMax, end);
+        }
+        for (const id of INGREDIENT_IDS) {
+            globalMin = Math.min(globalMin, id);
+            globalMax = Math.max(globalMax, id);
+        }
+
+        function scaleValue(value) {
+            return ((value - globalMin) / (globalMax - globalMin)) * 100;
+        }
+
+        function formatNumber(num) {
+            if (num >= 1e12) {
+                return (num / 1e12).toFixed(1) + 'T';
+            } else if (num >= 1e9) {
+                return (num / 1e9).toFixed(1) + 'B';
+            } else if (num >= 1e6) {
+                return (num / 1e6).toFixed(1) + 'M';
+            }
+            return num.toLocaleString();
+        }
+
+        function initVisualization() {
+            document.getElementById('totalRanges').textContent = RANGES.length;
+            renderRangeList();
+            renderTimeline();
+        }
+
+        function renderRangeList() {
+            const list = document.getElementById('rangeList');
+            list.innerHTML = '<h3 style="margin: 0 0 10px 0; color: #555;">Fresh ID Ranges</h3>';
+
+            RANGES.forEach((range, idx) => {
+                const item = document.createElement('div');
+                item.className = 'range-item';
+                item.dataset.index = idx;
+                item.innerHTML = `
+                    <span>Range ${idx + 1}:</span>
+                    <span>${formatNumber(range[0])} - ${formatNumber(range[1])}</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function renderTimeline() {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            // Render ranges
+            RANGES.forEach((range, idx) => {
+                const [start, end] = range;
+                const left = scaleValue(start);
+                const width = scaleValue(end) - left;
+
+                const bar = document.createElement('div');
+                bar.className = 'range-bar original';
+                bar.dataset.index = idx;
+                bar.style.left = `${left}%`;
+                bar.style.width = `${width}%`;
+                bar.title = `Range ${idx + 1}: ${formatNumber(start)} - ${formatNumber(end)}`;
+                timeline.appendChild(bar);
+            });
+        }
+
+        function renderIngredients() {
+            const timeline = document.getElementById('timeline');
+
+            // Remove old markers
+            document.querySelectorAll('.ingredient-marker').forEach(el => el.remove());
+
+            // Add new markers
+            INGREDIENT_IDS.forEach((id, idx) => {
+                const position = scaleValue(id);
+                const marker = document.createElement('div');
+                marker.className = 'ingredient-marker';
+                marker.dataset.index = idx;
+                marker.style.left = `${position}%`;
+                marker.title = `Ingredient ${idx + 1}: ${formatNumber(id)}`;
+
+                const label = document.createElement('div');
+                label.className = 'marker-label';
+                label.textContent = `#${idx + 1}`;
+                marker.appendChild(label);
+
+                timeline.appendChild(marker);
+            });
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.mode-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            reset();
+        }
+
+        function reset() {
+            isRunning = false;
+            renderTimeline();
+            if (mode === 'part1') {
+                renderIngredients();
+            }
+            document.getElementById('checkedCount').textContent = '0';
+            document.getElementById('freshCount').textContent = '0';
+            document.getElementById('mergedCount').textContent = '-';
+            document.getElementById('totalFreshIds').textContent = '-';
+            document.getElementById('infoPanel').textContent = 'Click "Run Algorithm" to start visualization';
+        }
+
+        async function runAlgorithm() {
+            if (isRunning) return;
+            isRunning = true;
+
+            if (mode === 'part1') {
+                await runPart1();
+            } else {
+                await runPart2();
+            }
+
+            isRunning = false;
+        }
+
+        async function runPart1() {
+            document.getElementById('infoPanel').textContent = 'Checking each ingredient against fresh ID ranges...';
+
+            let freshCount = 0;
+
+            for (let i = 0; i < INGREDIENT_IDS.length; i++) {
+                const id = INGREDIENT_IDS[i];
+                const marker = document.querySelector(`.ingredient-marker[data-index="${i}"]`);
+
+                marker.classList.add('checking');
+                document.getElementById('infoPanel').textContent =
+                    `Checking ingredient #${i + 1} (${formatNumber(id)})...`;
+
+                await sleep(animationSpeed);
+
+                // Check if ID is in any range
+                let isFresh = false;
+                for (let j = 0; j < RANGES.length; j++) {
+                    const [start, end] = RANGES[j];
+                    if (id >= start && id <= end) {
+                        isFresh = true;
+                        // Highlight the matching range
+                        const rangeItem = document.querySelector(`.range-item[data-index="${j}"]`);
+                        rangeItem.classList.add('highlight');
+                        await sleep(animationSpeed / 2);
+                        rangeItem.classList.remove('highlight');
+                        break;
+                    }
+                }
+
+                marker.classList.remove('checking');
+                if (isFresh) {
+                    marker.classList.add('fresh');
+                    freshCount++;
+                    document.getElementById('freshCount').textContent = freshCount;
+                }
+
+                document.getElementById('checkedCount').textContent = i + 1;
+                await sleep(animationSpeed / 2);
+            }
+
+            document.getElementById('infoPanel').textContent =
+                `Complete! ${freshCount} out of ${INGREDIENT_IDS.length} ingredients are fresh`;
+        }
+
+        async function runPart2() {
+            document.getElementById('infoPanel').textContent = 'Sorting ranges by start position...';
+
+            // Sort ranges
+            let sortedRanges = RANGES.map((r, i) => ({start: r[0], end: r[1], index: i}));
+            sortedRanges.sort((a, b) => a.start - b.start);
+
+            await sleep(animationSpeed);
+
+            document.getElementById('infoPanel').textContent = 'Merging overlapping ranges...';
+
+            let mergedRanges = [];
+            let current = sortedRanges[0];
+
+            for (let i = 1; i < sortedRanges.length; i++) {
+                const next = sortedRanges[i];
+
+                // Highlight ranges being compared
+                const rangeItem1 = document.querySelector(`.range-item[data-index="${current.index}"]`);
+                const rangeItem2 = document.querySelector(`.range-item[data-index="${next.index}"]`);
+                rangeItem1.classList.add('highlight');
+                rangeItem2.classList.add('highlight');
+
+                await sleep(animationSpeed);
+
+                if (next.start <= current.end + 1) {
+                    // Merge
+                    document.getElementById('infoPanel').textContent =
+                        `Merging: [${formatNumber(current.start)}-${formatNumber(current.end)}] + [${formatNumber(next.start)}-${formatNumber(next.end)}]`;
+                    current = {
+                        start: current.start,
+                        end: Math.max(current.end, next.end),
+                        index: current.index
+                    };
+                    await sleep(animationSpeed);
+                } else {
+                    // No overlap, save current
+                    mergedRanges.push(current);
+                    current = next;
+                }
+
+                rangeItem1.classList.remove('highlight');
+                rangeItem2.classList.remove('highlight');
+            }
+            mergedRanges.push(current);
+
+            document.getElementById('mergedCount').textContent = mergedRanges.length;
+
+            // Visualize merged ranges
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            for (const range of mergedRanges) {
+                const left = scaleValue(range.start);
+                const width = scaleValue(range.end) - left;
+
+                const bar = document.createElement('div');
+                bar.className = 'range-bar merged merging';
+                bar.style.left = `${left}%`;
+                bar.style.width = `${width}%`;
+                bar.title = `Merged: ${formatNumber(range.start)} - ${formatNumber(range.end)}`;
+                timeline.appendChild(bar);
+            }
+
+            await sleep(animationSpeed);
+
+            // Count total IDs
+            let totalIds = 0;
+            for (const range of mergedRanges) {
+                totalIds += (range.end - range.start + 1);
+            }
+
+            document.getElementById('totalFreshIds').textContent = formatNumber(totalIds);
+            document.getElementById('infoPanel').textContent =
+                `Complete! Merged ${RANGES.length} ranges into ${mergedRanges.length} ranges containing ${formatNumber(totalIds)} fresh IDs`;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Speed slider
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            const speed = parseInt(e.target.value);
+            animationSpeed = 1100 - (speed * 100);
+            document.getElementById('speedLabel').textContent = '●'.repeat(speed);
+        });
+
+        // Initialize
+        initVisualization();
+        if (mode === 'part1') {
+            renderIngredients();
+        }
+    </script>
+</body>
+</html>

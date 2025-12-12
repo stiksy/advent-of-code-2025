@@ -6,7 +6,7 @@ nav_order: 4
 
 # Day 4: Printing Department
 
-[Puzzle Link](https://adventofcode.com/2025/day/4) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day04/Day04.java) | [← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/4) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day04/Day04.java) | [🎨 Interactive Visualization](visualizations/day04-visualization.html) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 

@@ -6,7 +6,7 @@ nav_order: 5
 
 # Day 5: Cafeteria
 
-[Puzzle Link](https://adventofcode.com/2025/day/5) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day05/Day05.java) | [← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/5) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day05/Day05.java) | [🎨 Interactive Visualization](visualizations/day05-visualization.html) | [← Back to Home](../index.html)
 
 ## Puzzle Description
 

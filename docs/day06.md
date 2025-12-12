@@ -4,13 +4,9 @@ title: Day 6 - Trash Compactor
 nav_order: 6
 ---
 
-[← Back to Home](../index.html)
-
 # Day 6: Trash Compactor
 
-**Problem Link:** [Advent of Code 2025 - Day 6](https://adventofcode.com/2025/day/6)
-
-**Solution:** [Day06.java](https://github.com/Stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day06/Day06.java)
+[Puzzle Link](https://adventofcode.com/2025/day/6) | [Solution Code](https://github.com/Stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day06/Day06.java) | [🎨 Interactive Visualization](visualizations/day06-visualization.html) | [← Back to Home](../index.html)
 
 ## Part 1: Standard Math Worksheets
 

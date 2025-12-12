@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 6 - Trash Compactor Visualization</title>
+    <link rel="stylesheet" href="visualization-styles.css">
+    <style>
+        /* Day 6 Specific Styles */
+
+        .worksheet-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 300px;
+            overflow-x: auto;
+        }
+
+        .worksheet {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            display: inline-block;
+            white-space: pre;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .char {
+            display: inline-block;
+            width: 1ch;
+            transition: all 0.3s;
+        }
+
+        .char.highlight {
+            background: #3498db;
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 2px 4px rgba(52, 152, 219, 0.4);
+        }
+
+        .char.problem-boundary {
+            background: #e74c3c;
+        }
+
+        .char.operator {
+            background: #f39c12;
+            color: white;
+            font-weight: bold;
+        }
+
+        .char.current-number {
+            background: #2ecc71;
+            color: white;
+            font-weight: bold;
+        }
+
+        .problem-info {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .problem-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .problem-card {
+            background: #ecf0f1;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            min-width: 150px;
+            transition: all 0.3s;
+        }
+
+        .problem-card.active {
+            background: #3498db;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .problem-card .operator-symbol {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .problem-card.active .operator-symbol {
+            color: white;
+        }
+
+        .grand-total {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Day 6: Trash Compactor</h1>
+        <p class="subtitle">Cephalopod Math Worksheet Parsing</p>
+
+        <div class="mode-toggle">
+            <button class="active" onclick="setMode('part1')">Part 1: Standard Math</button>
+            <button onclick="setMode('part2')">Part 2: Cephalopod Math</button>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            Click "Run Algorithm" to start visualization
+        </div>
+
+        <div class="worksheet-container">
+            <div class="worksheet" id="worksheet"></div>
+        </div>
+
+        <div class="problem-info">
+            <h3 style="margin: 0 0 10px 0; color: #555;">Problems Found:</h3>
+            <div class="problem-list" id="problemList"></div>
+        </div>
+
+        <div class="grand-total" id="grandTotal" style="display: none;">
+            Grand Total: <span id="totalValue">-</span>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Problems Found</div>
+                <div class="stat-value" id="problemCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Current Problem</div>
+                <div class="stat-value" id="currentProblem">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Problems Solved</div>
+                <div class="stat-value" id="solvedCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Running Total</div>
+                <div class="stat-value" id="runningTotal">0</div>
+            </div>
+        </div>
+
+        <div class="speed-control">
+            <label for="speedSlider">Speed:</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="5">
+            <span id="speedLabel">●●●●●</span>
+        </div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="runAlgorithm()">▶ Run Algorithm</button>
+            <button class="btn-secondary" onclick="reset()">⟲ Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // First 50 columns of actual puzzle input
+        const WORKSHEET = `155  1 62 1925 984 83  723 832 57   1 134 44 6    55   95  4 3  4146
+614  4 39 3446 379 675 574 352 75  58 447 52 285  39  987  4 97 4371
+89   3 85 486   42 855 95  654 776 32 163 36 348  92  131 22 95 866
+18  21 21 58    46 921 77  499 928 12 621 23 7138 741 361 15 44 476
+*   *  *  +    *   *   *   *   +   +  +   +  +    *   +   *  +  +   `.split('\n');
+
+        let mode = 'part1';
+        let animationSpeed = 600;
+        let isRunning = false;
+        let problems = [];
+
+        function displayWorksheet() {
+            const worksheet = document.getElementById('worksheet');
+            worksheet.textContent = WORKSHEET.join('\n');
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.mode-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            reset();
+        }
+
+        function reset() {
+            isRunning = false;
+            displayWorksheet();
+            problems = [];
+            document.getElementById('problemList').innerHTML = '';
+            document.getElementById('problemCount').textContent = '0';
+            document.getElementById('currentProblem').textContent = '-';
+            document.getElementById('solvedCount').textContent = '0';
+            document.getElementById('runningTotal').textContent = '0';
+            document.getElementById('grandTotal').style.display = 'none';
+            document.getElementById('infoPanel').textContent = 'Click "Run Algorithm" to start visualization';
+        }
+
+        async function runAlgorithm() {
+            if (isRunning) return;
+            isRunning = true;
+
+            if (mode === 'part1') {
+                await runPart1();
+            } else {
+                await runPart2();
+            }
+
+            isRunning = false;
+        }
+
+        async function runPart1() {
+            document.getElementById('infoPanel').textContent = 'Part 1: Reading numbers horizontally (each row = one number)';
+            await sleep(animationSpeed);
+
+            // Find problems by scanning for operators
+            const operatorRow = WORKSHEET[WORKSHEET.length - 1];
+            const cols = operatorRow.length;
+
+            problems = [];
+
+            for (let col = 0; col < cols; col++) {
+                const char = operatorRow[col];
+                if (char === '*' || char === '+') {
+                    // Found operator, find problem boundaries
+                    let startCol = col;
+                    let endCol = col;
+
+                    // Find leftmost digit column for this problem
+                    for (let c = col - 1; c >= 0; c--) {
+                        let hasDigit = false;
+                        for (let r = 0; r < WORKSHEET.length - 1; r++) {
+                            if (WORKSHEET[r][c] && WORKSHEET[r][c].trim() && WORKSHEET[r][c] !== ' ') {
+                                hasDigit = true;
+                                break;
+                            }
+                        }
+                        if (hasDigit) {
+                            startCol = c;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // Find rightmost digit column
+                    for (let c = col + 1; c < cols; c++) {
+                        let hasDigit = false;
+                        for (let r = 0; r < WORKSHEET.length - 1; r++) {
+                            if (WORKSHEET[r][c] && WORKSHEET[r][c].trim() && WORKSHEET[r][c] !== ' ') {
+                                hasDigit = true;
+                                break;
+                            }
+                        }
+                        if (hasDigit) {
+                            endCol = c;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // Extract numbers from rows
+                    const numbers = [];
+                    for (let r = 0; r < WORKSHEET.length - 1; r++) {
+                        const segment = WORKSHEET[r].substring(startCol, endCol + 1).trim();
+                        if (segment) {
+                            numbers.push(parseInt(segment));
+                        }
+                    }
+
+                    if (numbers.length > 0) {
+                        problems.push({
+                            operator: char,
+                            numbers: numbers,
+                            startCol: startCol,
+                            endCol: endCol,
+                            col: col
+                        });
+                    }
+
+                    // Skip to end of this problem
+                    col = endCol;
+                }
+            }
+
+            document.getElementById('problemCount').textContent = problems.length;
+            document.getElementById('infoPanel').textContent =
+                `Found ${problems.length} problems. Now solving...`;
+
+            await sleep(animationSpeed);
+
+            // Solve each problem
+            let grandTotal = 0;
+            const problemList = document.getElementById('problemList');
+
+            for (let i = 0; i < problems.length; i++) {
+                const prob = problems[i];
+                document.getElementById('currentProblem').textContent = i + 1;
+
+                // Create problem card
+                const card = document.createElement('div');
+                card.className = 'problem-card active';
+                card.id = `problem-${i}`;
+
+                const expression = prob.numbers.join(` ${prob.operator} `);
+                let result = prob.numbers[0];
+                for (let j = 1; j < prob.numbers.length; j++) {
+                    if (prob.operator === '*') {
+                        result *= prob.numbers[j];
+                    } else {
+                        result += prob.numbers[j];
+                    }
+                }
+
+                card.innerHTML = `
+                    <div>Problem ${i + 1}</div>
+                    <div style="margin: 5px 0;">${expression}</div>
+                    <div style="font-weight: bold; color: #667eea;">= ${result.toLocaleString()}</div>
+                `;
+                problemList.appendChild(card);
+
+                document.getElementById('infoPanel').textContent =
+                    `Solving Problem ${i + 1}: ${expression} = ${result.toLocaleString()}`;
+
+                await sleep(animationSpeed);
+
+                grandTotal += result;
+                document.getElementById('runningTotal').textContent = grandTotal.toLocaleString();
+                document.getElementById('solvedCount').textContent = i + 1;
+
+                card.classList.remove('active');
+                await sleep(animationSpeed / 2);
+            }
+
+            document.getElementById('grandTotal').style.display = 'block';
+            document.getElementById('totalValue').textContent = grandTotal.toLocaleString();
+            document.getElementById('infoPanel').textContent =
+                `Complete! Grand Total: ${grandTotal.toLocaleString()}`;
+        }
+
+        async function runPart2() {
+            document.getElementById('infoPanel').textContent =
+                'Part 2: Reading numbers vertically right-to-left (each column = one digit)';
+            await sleep(animationSpeed);
+
+            // Find problems (same as Part 1)
+            const operatorRow = WORKSHEET[WORKSHEET.length - 1];
+            const cols = operatorRow.length;
+
+            problems = [];
+
+            for (let col = 0; col < cols; col++) {
+                const char = operatorRow[col];
+                if (char === '*' || char === '+') {
+                    let startCol = col;
+                    let endCol = col;
+
+                    // Find problem boundaries
+                    for (let c = col - 1; c >= 0; c--) {
+                        let hasDigit = false;
+                        for (let r = 0; r < WORKSHEET.length - 1; r++) {
+                            if (WORKSHEET[r][c] && WORKSHEET[r][c].trim() && WORKSHEET[r][c] !== ' ') {
+                                hasDigit = true;
+                                break;
+                            }
+                        }
+                        if (hasDigit) {
+                            startCol = c;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    for (let c = col + 1; c < cols; c++) {
+                        let hasDigit = false;
+                        for (let r = 0; r < WORKSHEET.length - 1; r++) {
+                            if (WORKSHEET[r][c] && WORKSHEET[r][c].trim() && WORKSHEET[r][c] !== ' ') {
+                                hasDigit = true;
+                                break;
+                            }
+                        }
+                        if (hasDigit) {
+                            endCol = c;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // For Part 2: read columns right-to-left, each row builds a number
+                    const rowNumbers = Array(WORKSHEET.length - 1).fill('');
+
+                    for (let c = endCol; c >= startCol; c--) {
+                        for (let r = 0; r < WORKSHEET.length - 1; r++) {
+                            const ch = WORKSHEET[r][c];
+                            if (ch && ch.trim() && ch !== ' ') {
+                                rowNumbers[r] += ch;
+                            }
+                        }
+                    }
+
+                    const numbers = rowNumbers.filter(n => n).map(n => parseInt(n));
+
+                    if (numbers.length > 0) {
+                        problems.push({
+                            operator: char,
+                            numbers: numbers,
+                            startCol: startCol,
+                            endCol: endCol,
+                            col: col
+                        });
+                    }
+
+                    col = endCol;
+                }
+            }
+
+            document.getElementById('problemCount').textContent = problems.length;
+            document.getElementById('infoPanel').textContent =
+                `Found ${problems.length} problems. Now solving...`;
+
+            await sleep(animationSpeed);
+
+            // Solve each problem
+            let grandTotal = 0;
+            const problemList = document.getElementById('problemList');
+
+            for (let i = 0; i < problems.length; i++) {
+                const prob = problems[i];
+                document.getElementById('currentProblem').textContent = i + 1;
+
+                const card = document.createElement('div');
+                card.className = 'problem-card active';
+                card.id = `problem-${i}`;
+
+                const expression = prob.numbers.join(` ${prob.operator} `);
+                let result = prob.numbers[0];
+                for (let j = 1; j < prob.numbers.length; j++) {
+                    if (prob.operator === '*') {
+                        result *= prob.numbers[j];
+                    } else {
+                        result += prob.numbers[j];
+                    }
+                }
+
+                card.innerHTML = `
+                    <div>Problem ${i + 1}</div>
+                    <div style="margin: 5px 0;">${expression}</div>
+                    <div style="font-weight: bold; color: #667eea;">= ${result.toLocaleString()}</div>
+                `;
+                problemList.appendChild(card);
+
+                document.getElementById('infoPanel').textContent =
+                    `Solving Problem ${i + 1}: ${expression} = ${result.toLocaleString()}`;
+
+                await sleep(animationSpeed);
+
+                grandTotal += result;
+                document.getElementById('runningTotal').textContent = grandTotal.toLocaleString();
+                document.getElementById('solvedCount').textContent = i + 1;
+
+                card.classList.remove('active');
+                await sleep(animationSpeed / 2);
+            }
+
+            document.getElementById('grandTotal').style.display = 'block';
+            document.getElementById('totalValue').textContent = grandTotal.toLocaleString();
+            document.getElementById('infoPanel').textContent =
+                `Complete! Grand Total: ${grandTotal.toLocaleString()}`;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Speed slider
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            const speed = parseInt(e.target.value);
+            animationSpeed = 1100 - (speed * 100);
+            document.getElementById('speedLabel').textContent = '●'.repeat(speed);
+        });
+
+        // Initialize
+        displayWorksheet();
+    </script>
+</body>
+</html>
