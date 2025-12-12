@@ -94,7 +94,7 @@ test_day() {
 
     # Calculate statistics
     min=${sorted_times[0]}
-    max=${sorted_times[-1]}
+    max=${sorted_times[${#sorted_times[@]}-1]}
     sum=0
 
     for time in "${times[@]}"; do
