@@ -328,3 +328,122 @@ For initial setup or troubleshooting, see `GITHUB_PAGES.md` for complete instruc
 - Changing themes
 - Troubleshooting deployment issues
 - Adding new documentation pages
+
+## Interactive Visualizations
+
+Each day's solution should include an interactive HTML visualization to demonstrate the algorithm in action.
+
+### Visualization Standards
+
+**IMPORTANT**: All visualizations must follow these standards for consistency:
+
+1. **Styling**:
+   - Use the shared CSS file: `<link rel="stylesheet" href="visualization-styles.css">`
+   - The shared CSS provides: fonts, colors, button styles, layouts, animations
+   - Minimal custom CSS allowed for puzzle-specific elements only
+
+2. **Speed Control**:
+   - Always include a speed slider with standardized labels
+   - Range: 1 (slow) to 10 (fast), default: 5
+   - Label: "Speed:" with no units (ms/s) shown
+   - Use inverse mapping: lower number = slower animation
+
+3. **Input Data**:
+   - **Always use actual puzzle input** from `src/main/resources/dayXX/input.txt`
+   - **No sample/example input fields** - visualizations should work with real data only
+   - Embed the actual input directly in the JavaScript
+   - No textarea or input fields for users to enter data
+
+4. **Structure**:
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Day X - Puzzle Name Visualization</title>
+       <link rel="stylesheet" href="visualization-styles.css">
+       <style>
+           /* Only puzzle-specific custom styles here */
+       </style>
+   </head>
+   <body>
+       <div class="container">
+           <h1>Day X: Puzzle Name</h1>
+           <p class="subtitle">Algorithm Visualization</p>
+
+           <!-- Part toggle if needed -->
+           <div class="mode-toggle">
+               <button class="active" onclick="setMode('part1')">Part 1</button>
+               <button onclick="setMode('part2')">Part 2</button>
+           </div>
+
+           <!-- Main visualization area -->
+           <div class="visualization-area">
+               <!-- Puzzle-specific visualization -->
+           </div>
+
+           <!-- Statistics -->
+           <div class="stats">
+               <!-- Stat cards -->
+           </div>
+
+           <!-- Speed control (required) -->
+           <div class="speed-control">
+               <label>Speed:</label>
+               <input type="range" id="speedSlider" min="1" max="10" value="5">
+               <span id="speedLabel">●●●●●</span>
+           </div>
+
+           <!-- Controls -->
+           <div class="controls">
+               <button class="btn-primary" onclick="start()">▶ Start</button>
+               <button class="btn-secondary" onclick="reset()">⟲ Reset</button>
+           </div>
+       </div>
+       <script>
+           // Actual puzzle input embedded here
+           const PUZZLE_INPUT = "...actual input...";
+
+           // Speed mapping (inverse: 1=slowest, 10=fastest)
+           function getDelay() {
+               const speed = parseInt(document.getElementById('speedSlider').value);
+               return 1100 - (speed * 100); // 1000ms to 100ms
+           }
+       </script>
+   </body>
+   </html>
+   ```
+
+5. **File Organization**:
+   - Visualizations: `docs/visualizations/dayXX-visualization.html`
+   - Shared CSS: `docs/visualizations/visualization-styles.css`
+   - Link from docs: Add to the documentation header navigation
+
+6. **Required Elements**:
+   - Title with day number and puzzle name
+   - Subtitle describing what's being visualized
+   - Mode toggle (if puzzle has Part 1 and Part 2)
+   - Main visualization area (puzzle-specific)
+   - Statistics display (optional but recommended)
+   - Speed control (required, standardized format)
+   - Control buttons (start/pause, reset minimum)
+
+7. **Documentation Integration**:
+   - Add visualization link to `docs/dayXX.md` header:
+     ```markdown
+     [🎨 Interactive Visualization](visualizations/dayXX-visualization.html)
+     ```
+   - Add description section after puzzle description explaining what the visualization shows
+
+### Creating New Visualizations
+
+When adding a visualization for a new day:
+
+1. Read the actual puzzle input from `src/main/resources/dayXX/input.txt`
+2. Create `docs/visualizations/dayXX-visualization.html` using the standard structure
+3. Link the shared CSS file
+4. Embed the actual puzzle input in the JavaScript
+5. Implement puzzle-specific visualization logic
+6. Add standardized speed control
+7. Update `docs/dayXX.md` to link to the visualization

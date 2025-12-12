@@ -4,70 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day 2 - Gift Shop Visualization</title>
+    <link rel="stylesheet" href="visualization-styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 1000px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2em;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-
-        .mode-toggle {
-            display: flex;
-            gap: 5px;
-            background: #f8f9fa;
-            padding: 5px;
-            border-radius: 8px;
-            margin: 0 auto 20px;
-            width: fit-content;
-        }
-
-        .mode-toggle button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            background: transparent;
-        }
-
-        .mode-toggle button.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
+        /* Day 2 Specific Styles */
 
         .display-area {
             background: #f8f9fa;
@@ -112,155 +51,11 @@
             color: #333;
         }
 
-        .result-badge {
-            font-size: 1.3em;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        .result-badge.invalid {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        .result-badge.valid {
-            background: #51cf66;
-            color: white;
-        }
-
         .pattern-info {
             font-size: 1.1em;
             color: #666;
             margin-top: 15px;
             text-align: center;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        button {
-            padding: 12px 24px;
-            font-size: 1em;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #333;
-            border: 2px solid #dee2e6;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .stat-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .input-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-        }
-
-        .input-section h3 {
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .range-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 1em;
-        }
-
-        .example-list {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .example-btn {
-            padding: 8px 16px;
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.3s;
-        }
-
-        .example-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .speed-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-            margin: 15px 0;
-        }
-
-        .speed-control label {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .speed-control input[type="range"] {
-            width: 200px;
         }
     </style>
 </head>
@@ -302,9 +97,9 @@
         </div>
 
         <div class="speed-control">
-            <label for="speedSlider">Animation Speed:</label>
-            <input type="range" id="speedSlider" min="10" max="500" value="100" step="10">
-            <span id="speedValue">100ms</span>
+            <label for="speedSlider">Speed:</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="5">
+            <span id="speedLabel">●●●●●</span>
         </div>
 
         <div class="controls">
@@ -312,26 +107,23 @@
             <button class="btn-secondary" onclick="stopAnimation()">⏸ Pause</button>
             <button class="btn-secondary" onclick="reset()">⟲ Reset</button>
         </div>
-
-        <div class="input-section">
-            <h3>Test Range</h3>
-            <input type="text" id="rangeInput" class="range-input" placeholder="e.g., 11-22 or 95-115">
-            <div class="example-list">
-                <button class="example-btn" onclick="loadExample('11-22')">11-22</button>
-                <button class="example-btn" onclick="loadExample('95-115')">95-115</button>
-                <button class="example-btn" onclick="loadExample('998-1012')">998-1012</button>
-                <button class="example-btn" onclick="loadExample('222220-222224')">222220-222224</button>
-            </div>
-        </div>
     </div>
 
     <script>
+        // Actual puzzle input - first few ranges from the actual puzzle
+        const PUZZLE_RANGES = [
+            [11, 22], [95, 115], [998, 1012], [1188511880, 1188511890],
+            [222220, 222224], [1698522, 1698528], [446443, 446449],
+            [38593856, 38593862], [565653, 565659], [824824821, 824824827]
+        ];
+
         let mode = 'part1';
-        let animationSpeed = 100;
+        let animationSpeed = 600; // Default for speed 5
         let isRunning = false;
         let currentNumber = 0;
         let rangeStart = 0;
         let rangeEnd = 0;
+        let currentRangeIndex = 0;
         let checkedCount = 0;
         let invalidCount = 0;
         let sumInvalid = 0;
@@ -345,41 +137,25 @@
             reset();
         }
 
-        function loadExample(range) {
-            document.getElementById('rangeInput').value = range;
-            const [start, end] = range.split('-').map(Number);
-            rangeStart = start;
-            rangeEnd = end;
-            document.getElementById('rangeDisplay').textContent = range;
-            reset();
-        }
-
-        function parseRange() {
-            const input = document.getElementById('rangeInput').value.trim();
-            if (!input) return false;
-
-            const [start, end] = input.split('-').map(Number);
-            if (isNaN(start) || isNaN(end)) return false;
-
-            rangeStart = start;
-            rangeEnd = end;
-            currentNumber = start;
-            document.getElementById('rangeDisplay').textContent = input;
-            return true;
+        function loadNextRange() {
+            if (currentRangeIndex < PUZZLE_RANGES.length) {
+                [rangeStart, rangeEnd] = PUZZLE_RANGES[currentRangeIndex];
+                currentNumber = rangeStart;
+                document.getElementById('rangeDisplay').textContent = `${rangeStart}-${rangeEnd}`;
+                return true;
+            }
+            return false;
         }
 
         function reset() {
             stopAnimation();
-            if (parseRange()) {
-                currentNumber = rangeStart;
-                checkedCount = 0;
-                invalidCount = 0;
-                sumInvalid = 0;
+            currentRangeIndex = 0;
+            checkedCount = 0;
+            invalidCount = 0;
+            sumInvalid = 0;
+            if (loadNextRange()) {
                 updateStats();
                 displayNumber(currentNumber, false, null);
-            } else {
-                document.getElementById('digitContainer').textContent = 'Enter a range';
-                document.getElementById('resultBadge').style.display = 'none';
             }
         }
 
@@ -485,15 +261,19 @@
         }
 
         async function startAnimation() {
-            if (!parseRange()) {
-                alert('Please enter a valid range (e.g., 11-22)');
-                return;
-            }
-
             if (isRunning) return;
             isRunning = true;
 
-            while (isRunning && currentNumber <= rangeEnd) {
+            while (isRunning) {
+                if (currentNumber > rangeEnd) {
+                    // Move to next range
+                    currentRangeIndex++;
+                    if (!loadNextRange()) {
+                        isRunning = false;
+                        break;
+                    }
+                }
+
                 const result = mode === 'part1' ?
                     isInvalidPart1(currentNumber) :
                     isInvalidPart2(currentNumber);
@@ -512,24 +292,21 @@
 
                 currentNumber++;
             }
-
-            if (currentNumber > rangeEnd) {
-                isRunning = false;
-            }
         }
 
         function stopAnimation() {
             isRunning = false;
         }
 
-        // Speed control
+        // Speed slider with dots indicator
         document.getElementById('speedSlider').addEventListener('input', (e) => {
-            animationSpeed = parseInt(e.target.value);
-            document.getElementById('speedValue').textContent = animationSpeed + 'ms';
+            const speed = parseInt(e.target.value);
+            animationSpeed = 1100 - (speed * 100); // Inverse mapping: 1-10 becomes 1000ms-100ms
+            document.getElementById('speedLabel').textContent = '●'.repeat(speed);
         });
 
         // Initialize
-        loadExample('11-22');
+        reset();
     </script>
 </body>
 </html>
