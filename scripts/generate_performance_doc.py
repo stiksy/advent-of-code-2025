@@ -8,6 +8,7 @@ Reads performance_results.csv and creates a markdown document with statistics an
 import csv
 import sys
 from pathlib import Path
+from datetime import datetime
 
 def format_time(ms):
     """Format milliseconds nicely."""
@@ -208,7 +209,7 @@ python3 scripts/generate_performance_doc.py
 
 ---
 
-*Last updated: {Path('performance_results.csv').stat().st_mtime}*
+*Last updated: {datetime.fromtimestamp(Path('performance_results.csv').stat().st_mtime).strftime('%Y-%m-%d %H:%M:%S')}*
 """
 
     # Write the markdown file
