@@ -1,0 +1,176 @@
+=== Advent of Code 2025 Performance Test ===
+Running each solution 100 times...
+Started at: Fri Dec 12 13:23:51 GMT 2025
+
+Building all solutions...
+INFO: Analyzed 14 targets (0 packages loaded, 0 targets configured).
+INFO: Found 14 targets...
+INFO: Elapsed time: 0.100s, Critical Path: 0.00s
+INFO: 1 process: 1 internal.
+INFO: Build completed successfully, 1 total action
+
+Testing Day 1...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 1:
+    Min:     60ms
+    Max:     80ms
+    Average: 70ms
+    Median:  71ms
+    P95:     76ms
+    StdDev:  3.16ms
+    Part 1:  1145
+    Part 2:  6561
+
+Testing Day 2...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 2:
+    Min:     202ms
+    Max:     227ms
+    Average: 211ms
+    Median:  211ms
+    P95:     217ms
+    StdDev:  3.87ms
+    Part 1:  54234399924
+    Part 2:  70187097315
+
+Testing Day 3...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 3:
+    Min:     61ms
+    Max:     90ms
+    Average: 74ms
+    Median:  76ms
+    P95:     83ms
+    StdDev:  5.83ms
+    Part 1:  17330
+    Part 2:  171518260283767
+
+Testing Day 4...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 4:
+    Min:     65ms
+    Max:     94ms
+    Average: 77ms
+    Median:  76ms
+    P95:     90ms
+    StdDev:  5.47ms
+    Part 1:  1553
+    Part 2:  8442
+
+Testing Day 5...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 5:
+    Min:     57ms
+    Max:     85ms
+    Average: 70ms
+    Median:  73ms
+    P95:     76ms
+    StdDev:  5.83ms
+    Part 1:  694
+    Part 2:  352716206375547
+
+Testing Day 6...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 6:
+    Min:     55ms
+    Max:     78ms
+    Average: 69ms
+    Median:  71ms
+    P95:     75ms
+    StdDev:  5.00ms
+    Part 1:  5552221122013
+    Part 2:  11371597126232
+
+Testing Day 7...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 7:
+    Min:     72ms
+    Max:     88ms
+    Average: 78ms
+    Median:  78ms
+    P95:     84ms
+    StdDev:  2.64ms
+    Part 1:  1570
+    Part 2:  15118009521693
+
+Testing Day 8...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 8:
+    Min:     92ms
+    Max:     116ms
+    Average: 108ms
+    Median:  108ms
+    P95:     113ms
+    StdDev:  3.60ms
+    Part 1:  96672
+    Part 2:  22517595
+
+Testing Day 9...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 9:
+    Min:     104ms
+    Max:     136ms
+    Average: 115ms
+    Median:  113ms
+    P95:     129ms
+    StdDev:  6.63ms
+    Part 1:  4781546175
+    Part 2:  1573359081
+
+Testing Day 10...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 10:
+    Min:     605ms
+    Max:     865ms
+    Average: 696ms
+    Median:  718ms
+    P95:     749ms
+    StdDev:  53.35ms
+    Part 1:  375
+    Part 2:  15377
+
+Testing Day 11...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 11:
+    Min:     61ms
+    Max:     123ms
+    Average: 76ms
+    Median:  77ms
+    P95:     84ms
+    StdDev:  6.63ms
+    Part 1:  674
+    Part 2:  438314708837664
+
+Testing Day 12...
+  Warming up JVM...
+  Running 100 iterations...
+  Results for Day 12:
+    Min:     320ms
+    Max:     370ms
+    Average: 328ms
+    Median:  327ms
+    P95:     346ms
+    StdDev:  7.28ms
+    Part 1:  577
+    Part 2:  0
+
+=== Performance Test Complete ===
+Finished at: Fri Dec 12 13:27:36 GMT 2025
+
+Results saved to:
+  - performance_results.txt (detailed text)
+  - performance_results.csv (CSV format)
+
+To generate performance documentation:
+  python3 scripts/generate_performance_doc.py

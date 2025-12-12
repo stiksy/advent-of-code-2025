@@ -278,12 +278,8 @@ public class Day10 {
             }
         }
 
-        // Try different combinations of free variables to find minimum
-        // Start with all free variables at 0, then increase
-        int maxFreeVarValue = 1000; // Upper bound for search
+        // Find minimum by bounded search on free variables
         int minPresses = Integer.MAX_VALUE;
-
-        // Use a simple approach: try free variables from 0 up to a reasonable limit
         int numFreeVars = freeVars.size();
 
         if (numFreeVars == 0) {
@@ -299,41 +295,101 @@ public class Day10 {
                 solution[pivotCol[row]] = (int) Math.round(val);
             }
 
-            // Check if valid (all non-negative)
+            // Verify solution
             boolean valid = true;
-            int sum = 0;
-            for (int v : solution) {
-                if (v < 0) {
+            for (int counter = 0; counter < numCounters; counter++) {
+                int actual = 0;
+                for (int button = 0; button < numButtons; button++) {
+                    if (machine.buttons.get(button).contains(counter)) {
+                        actual += solution[button];
+                    }
+                }
+                if (actual != machine.joltageRequirements[counter]) {
                     valid = false;
                     break;
                 }
-                sum += v;
             }
-            return valid ? sum : -1;
+            if (valid) {
+                int sum = 0;
+                for (int v : solution) sum += v;
+                return sum;
+            }
+            return -1;
         }
 
-        // With free variables, use priority queue approach to explore smallest sums first
-        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> {
-            int sumA = 0, sumB = 0;
-            for (int v : a) sumA += v;
-            for (int v : b) sumB += v;
-            return Integer.compare(sumA, sumB);
-        });
-        Set<String> visited = new HashSet<>();
-        queue.offer(new int[numFreeVars]);
+        // Use branch-and-bound to find minimum
+        int[] bestSolution = new int[1];
 
-        while (!queue.isEmpty()) {
-            int[] freeVarValues = queue.poll();
+        // Get a good initial solution using greedy heuristic (all free vars = 0)
+        int[] greedySolution = new int[numButtons];
+        boolean validGreedy = true;
+        for (int row = currentRow - 1; row >= 0; row--) {
+            if (pivotCol[row] == -1) continue;
 
-            String key = Arrays.toString(freeVarValues);
-            if (visited.contains(key)) continue;
-            visited.add(key);
+            double val = matrix[row][numButtons];
+            for (int col = pivotCol[row] + 1; col < numButtons; col++) {
+                val -= matrix[row][col] * greedySolution[col];
+            }
+            int intVal = (int) Math.round(val);
+            if (intVal < 0) {
+                validGreedy = false;
+                break;
+            }
+            greedySolution[pivotCol[row]] = intVal;
+        }
 
-            // If sum of free vars already exceeds minPresses, skip
-            int freeSum = 0;
-            for (int v : freeVarValues) freeSum += v;
-            if (freeSum >= minPresses) continue;
+        if (validGreedy) {
+            // Verify greedy solution
+            boolean isValid = true;
+            for (int counter = 0; counter < numCounters; counter++) {
+                int actual = 0;
+                for (int button = 0; button < numButtons; button++) {
+                    if (machine.buttons.get(button).contains(counter)) {
+                        actual += greedySolution[button];
+                    }
+                }
+                if (actual != machine.joltageRequirements[counter]) {
+                    isValid = false;
+                    break;
+                }
+            }
 
+            if (isValid) {
+                int greedyTotal = 0;
+                for (int v : greedySolution) greedyTotal += v;
+                bestSolution[0] = greedyTotal;
+            } else {
+                bestSolution[0] = Integer.MAX_VALUE;
+            }
+        } else {
+            bestSolution[0] = Integer.MAX_VALUE;
+        }
+
+        // Upper bound: use greedy solution if valid, otherwise sum of requirements
+        int upperBound;
+        if (bestSolution[0] != Integer.MAX_VALUE) {
+            upperBound = bestSolution[0];
+        } else {
+            upperBound = 0;
+            for (int req : machine.joltageRequirements) {
+                upperBound += req;
+            }
+        }
+
+        // Only search if we might find a better solution
+        if (numFreeVars > 0) {
+            branchAndBound(machine, matrix, pivotCol, currentRow, numButtons, numCounters,
+                          freeVars, numFreeVars, 0, new int[numFreeVars], 0, bestSolution, upperBound);
+        }
+
+        return bestSolution[0] == Integer.MAX_VALUE ? -1 : bestSolution[0];
+    }
+
+    private static void branchAndBound(Machine machine, double[][] matrix, int[] pivotCol, int currentRow,
+                                       int numButtons, int numCounters, List<Integer> freeVars, int numFreeVars,
+                                       int index, int[] freeVarValues, int freeVarSum, int[] bestSolution, int upperBound) {
+        if (index == numFreeVars) {
+            // Back substitute to get complete solution
             int[] solution = new int[numButtons];
 
             // Set free variables
@@ -341,8 +397,7 @@ public class Day10 {
                 solution[freeVars.get(i)] = freeVarValues[i];
             }
 
-            // Back substitute
-            boolean valid = true;
+            // Back substitute for pivot variables
             for (int row = currentRow - 1; row >= 0; row--) {
                 if (pivotCol[row] == -1) continue;
 
@@ -351,49 +406,51 @@ public class Day10 {
                     val -= matrix[row][col] * solution[col];
                 }
                 int intVal = (int) Math.round(val);
-                if (intVal < 0) {
-                    valid = false;
-                    break;
-                }
+                if (intVal < 0) return;
                 solution[pivotCol[row]] = intVal;
             }
 
-            if (valid) {
-                // Verify the solution actually satisfies the original equations
-                boolean verified = true;
-                for (int counter = 0; counter < numCounters; counter++) {
-                    int actual = 0;
-                    for (int button = 0; button < numButtons; button++) {
-                        if (machine.buttons.get(button).contains(counter)) {
-                            actual += solution[button];
-                        }
-                    }
-                    if (actual != machine.joltageRequirements[counter]) {
-                        verified = false;
-                        break;
+            // Calculate total button presses
+            int total = 0;
+            for (int v : solution) total += v;
+
+            // Prune if not better than current best
+            if (total >= bestSolution[0]) {
+                return;
+            }
+
+            // Verify solution satisfies joltage requirements
+            for (int counter = 0; counter < numCounters; counter++) {
+                int actual = 0;
+                for (int button = 0; button < numButtons; button++) {
+                    if (machine.buttons.get(button).contains(counter)) {
+                        actual += solution[button];
                     }
                 }
-
-                if (verified) {
-                    int sum = 0;
-                    for (int v : solution) {
-                        sum += v;
-                    }
-                    minPresses = Math.min(minPresses, sum);
+                if (actual != machine.joltageRequirements[counter]) {
+                    return;
                 }
             }
 
-            // Always explore neighboring states (increment each free variable)
-            for (int i = 0; i < numFreeVars; i++) {
-                if (freeVarValues[i] < maxFreeVarValue) {
-                    int[] newVals = freeVarValues.clone();
-                    newVals[i]++;
-                    queue.offer(newVals);
-                }
-            }
+            // Valid solution - update best
+            bestSolution[0] = total;
+            return;
         }
 
-        return minPresses == Integer.MAX_VALUE ? -1 : minPresses;
+        // Prune: if free variables already exceed best, stop
+        if (freeVarSum >= bestSolution[0]) {
+            return;
+        }
+
+        // Enumerate values for current free variable
+        // Limit by current best and upper bound
+        int maxVal = Math.min(bestSolution[0] - freeVarSum, upperBound);
+        for (int val = 0; val <= maxVal; val++) {
+            freeVarValues[index] = val;
+            branchAndBound(machine, matrix, pivotCol, currentRow, numButtons, numCounters,
+                          freeVars, numFreeVars, index + 1, freeVarValues, freeVarSum + val,
+                          bestSolution, upperBound);
+        }
     }
 
     public long solvePart2(List<String> input) {

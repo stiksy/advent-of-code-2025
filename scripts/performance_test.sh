@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Performance test script for Advent of Code 2025 solutions
-# Runs each day 1000 times and collects timing statistics
+# Runs each day 100 times and collects timing statistics
 
 set -e
 
-ITERATIONS=1000
+ITERATIONS=100
 RESULTS_FILE="performance_results.txt"
 CSV_FILE="performance_results.csv"
 
@@ -63,7 +63,7 @@ test_day() {
     # Run iterations
     for i in $(seq 1 $ITERATIONS); do
         # Show progress every 100 iterations
-        if [ $((i % 100)) -eq 0 ]; then
+        if [ $((i % 10)) -eq 0 ]; then
             echo -ne "  Progress: $i/$ITERATIONS\r"
         fi
 

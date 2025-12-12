@@ -10,7 +10,7 @@ Runs comprehensive performance benchmarks for all solutions.
 
 **What it does:**
 - Builds all solutions using Bazel
-- Runs each solution 1,000 times
+- Runs each solution 100 times
 - Performs JVM warm-up (10 iterations) before measurement
 - Collects timing statistics (min, max, avg, median, P95, stddev)
 - Saves results to CSV and text files
