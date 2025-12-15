@@ -4,7 +4,7 @@ title: Day 9 - Movie Theater
 nav_order: 9
 ---
 
-[← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/9) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day09/Day09.java) | [🎨 Interactive Visualization](visualizations/day09-visualization.html) | [← Back to Home](../index.html)
 
 # Day 9: Movie Theater
 

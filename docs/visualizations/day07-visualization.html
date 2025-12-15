@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7 - Laboratories Visualization</title>
+    <link rel="stylesheet" href="visualization-styles.css">
+    <style>
+        /* Day 7 Specific Styles */
+
+        .manifold-container {
+            background: #2c3e50;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .manifold {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            display: inline-grid;
+            gap: 2px;
+        }
+
+        .cell {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #34495e;
+            color: #ecf0f1;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .cell.start {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        .cell.splitter {
+            background: #e74c3c;
+            color: white;
+            font-weight: bold;
+        }
+
+        .cell.beam {
+            background: #f39c12;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.8);
+            animation: beam-glow 0.5s ease-in-out;
+        }
+
+        .cell.split-active {
+            background: #2ecc71;
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.9);
+        }
+
+        @keyframes beam-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .path-tree {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 150px;
+            overflow-x: auto;
+        }
+
+        .tree-node {
+            background: #ecf0f1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 4px;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .tree-node.active {
+            background: #3498db;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .legend {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+        }
+
+        .legend-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 Day 7: Laboratories</h1>
+        <p class="subtitle">Tachyon Beam Splitting Visualization</p>
+
+        <div class="mode-toggle">
+            <button class="active" onclick="setMode('part1')">Part 1: Count Splits</button>
+            <button onclick="setMode('part2')">Part 2: Count Timelines</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box" style="background: #3498db;"></div>
+                <span>Start (S)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #e74c3c;"></div>
+                <span>Splitter (^)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #f39c12;"></div>
+                <span>Active Beam</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box" style="background: #2ecc71;"></div>
+                <span>Split Event</span>
+            </div>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            Click "Run Algorithm" to start visualization
+        </div>
+
+        <div class="manifold-container">
+            <div class="manifold" id="manifold"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Active Beams</div>
+                <div class="stat-value" id="activeBeams">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Splits Count</div>
+                <div class="stat-value" id="splitsCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Timelines</div>
+                <div class="stat-value" id="timelinesCount">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Beam Depth</div>
+                <div class="stat-value" id="beamDepth">0</div>
+            </div>
+        </stats>
+
+        <div class="speed-control">
+            <label for="speedSlider">Speed:</label>
+            <input type="range" id="speedSlider" min="1" max="10" value="5">
+            <span id="speedLabel">●●●●●</span>
+        </div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="runAlgorithm()">▶ Run Algorithm</button>
+            <button class="btn-secondary" onclick="reset()">⟲ Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // Example manifold from problem description
+        const MANIFOLD = [
+            '.......S.......',
+            '...............',
+            '.......^.......',
+            '...............',
+            '......^.^......',
+            '...............',
+            '.....^.^.^.....',
+            '...............',
+            '....^.^...^....',
+            '...............',
+            '...^.^...^.^...',
+            '...............',
+            '..^...^.....^..',
+            '...............',
+            '.^.^.^.^.^...^.',
+            '...............'
+        ];
+
+        let mode = 'part1';
+        let animationSpeed = 600;
+        let isRunning = false;
+        let grid = [];
+        let rows = 0;
+        let cols = 0;
+        let startRow = -1;
+        let startCol = -1;
+
+        function initManifold() {
+            grid = MANIFOLD.map(line => line.split(''));
+            rows = grid.length;
+            cols = grid[0].length;
+
+            // Find start position
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    if (grid[r][c] === 'S') {
+                        startRow = r;
+                        startCol = c;
+                    }
+                }
+            }
+
+            renderManifold();
+        }
+
+        function renderManifold() {
+            const manifoldEl = document.getElementById('manifold');
+            manifoldEl.innerHTML = '';
+            manifoldEl.style.gridTemplateColumns = `repeat(${cols}, 20px)`;
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+
+                    const char = grid[r][c];
+                    if (char === 'S') {
+                        cell.classList.add('start');
+                        cell.textContent = 'S';
+                    } else if (char === '^') {
+                        cell.classList.add('splitter');
+                        cell.textContent = '^';
+                    } else {
+                        cell.textContent = '';
+                    }
+
+                    manifoldEl.appendChild(cell);
+                }
+            }
+        }
+
+        function getCellElement(r, c) {
+            return document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.mode-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            reset();
+        }
+
+        function reset() {
+            isRunning = false;
+            initManifold();
+            document.getElementById('activeBeams').textContent = '0';
+            document.getElementById('splitsCount').textContent = '0';
+            document.getElementById('timelinesCount').textContent = '-';
+            document.getElementById('beamDepth').textContent = '0';
+            document.getElementById('infoPanel').textContent = 'Click "Run Algorithm" to start visualization';
+        }
+
+        async function runAlgorithm() {
+            if (isRunning) return;
+            isRunning = true;
+
+            if (mode === 'part1') {
+                await runPart1();
+            } else {
+                await runPart2();
+            }
+
+            isRunning = false;
+        }
+
+        async function runPart1() {
+            document.getElementById('infoPanel').textContent = 'Simulating beam travel with BFS...';
+
+            const queue = [[startRow + 1, startCol]];
+            const visited = new Set();
+            let splitCount = 0;
+
+            while (queue.length > 0 && isRunning) {
+                const [row, col] = queue.shift();
+
+                // Update stats
+                document.getElementById('activeBeams').textContent = queue.length;
+                document.getElementById('beamDepth').textContent = row - startRow;
+
+                // Check bounds
+                if (row < 0 || row >= rows || col < 0 || col >= cols) {
+                    continue;
+                }
+
+                // Check visited
+                const state = `${row},${col}`;
+                if (visited.has(state)) {
+                    continue;
+                }
+                visited.add(state);
+
+                // Visualize beam at current position
+                const cell = getCellElement(row, col);
+                if (cell) {
+                    cell.classList.add('beam');
+                    await sleep(animationSpeed / 2);
+                }
+
+                const char = grid[row][col];
+
+                if (char === '^') {
+                    // Splitter!
+                    splitCount++;
+                    document.getElementById('splitsCount').textContent = splitCount;
+
+                    cell.classList.add('split-active');
+                    document.getElementById('infoPanel').textContent =
+                        `Split #${splitCount} at (${row}, ${col}) - Creating left and right beams`;
+
+                    await sleep(animationSpeed);
+
+                    // Add left and right beams
+                    queue.push([row + 1, col - 1]);
+                    queue.push([row + 1, col + 1]);
+
+                    cell.classList.remove('split-active');
+                } else {
+                    // Empty space, continue downward
+                    queue.push([row + 1, col]);
+                }
+
+                if (cell) {
+                    cell.classList.remove('beam');
+                }
+            }
+
+            document.getElementById('infoPanel').textContent =
+                `Complete! Total splits: ${splitCount}`;
+        }
+
+        async function runPart2() {
+            document.getElementById('infoPanel').textContent = 'Counting all possible timelines with DFS...';
+
+            const memo = new Map();
+
+            function countPaths(row, col) {
+                if (row >= rows || col < 0 || col >= cols) {
+                    return 1; // Exited the manifold = 1 timeline
+                }
+
+                const state = `${row},${col}`;
+                if (memo.has(state)) {
+                    return memo.get(state);
+                }
+
+                const char = grid[row][col];
+                let paths = 0;
+
+                if (char === '^') {
+                    // Splitter: sum of left and right paths
+                    paths = countPaths(row + 1, col - 1) + countPaths(row + 1, col + 1);
+                } else {
+                    // Empty space: continue downward
+                    paths = countPaths(row + 1, col);
+                }
+
+                memo.set(state, paths);
+                return paths;
+            }
+
+            // Animate the counting process
+            let splitsProcessed = 0;
+            const splitters = [];
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    if (grid[r][c] === '^') {
+                        splitters.push([r, c]);
+                    }
+                }
+            }
+
+            document.getElementById('splitsCount').textContent = splitters.length;
+
+            for (const [r, c] of splitters) {
+                const cell = getCellElement(r, c);
+                cell.classList.add('split-active');
+                splitsProcessed++;
+
+                document.getElementById('infoPanel').textContent =
+                    `Processing splitter ${splitsProcessed}/${splitters.length} at (${r}, ${c})`;
+
+                await sleep(animationSpeed / 2);
+                cell.classList.remove('split-active');
+            }
+
+            const totalTimelines = countPaths(startRow + 1, startCol);
+            document.getElementById('timelinesCount').textContent = totalTimelines;
+
+            document.getElementById('infoPanel').textContent =
+                `Complete! Total timelines: ${totalTimelines} (exponential growth from ${splitters.length} splitters)`;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Speed slider
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            const speed = parseInt(e.target.value);
+            animationSpeed = 1100 - (speed * 100);
+            document.getElementById('speedLabel').textContent = '●'.repeat(speed);
+        });
+
+        // Initialize
+        initManifold();
+    </script>
+</body>
+</html>

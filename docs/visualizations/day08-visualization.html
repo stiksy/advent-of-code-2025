@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 8 - Playground Visualization</title>
+    <link rel="stylesheet" href="visualization-styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Day 8: Playground</h1>
+        <p class="subtitle">3D Minimum Spanning Tree Construction</p>
+
+        <div class="info-panel">
+            <p>Day 8 involves constructing a Minimum Spanning Tree (MST) in 3D space using Union-Find (Disjoint Set Union).</p>
+            <p><strong>Key Concepts:</strong></p>
+            <ul style="text-align: left; margin: 10px auto; max-width: 600px;">
+                <li>Parse 3D points from input</li>
+                <li>Calculate distances between all point pairs</li>
+                <li>Sort edges by distance</li>
+                <li>Use Union-Find to build MST without creating cycles</li>
+                <li>Sum edge weights in the final MST</li>
+            </ul>
+            <p>See the <a href="https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day08/Day08.java" target="_blank">solution code</a> for the complete implementation.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Algorithm</div>
+                <div class="stat-value" style="font-size: 1.2em;">Kruskal's MST</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Data Structure</div>
+                <div class="stat-value" style="font-size: 1.2em;">Union-Find</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Complexity</div>
+                <div class="stat-value" style="font-size: 1.2em;">O(E log E)</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

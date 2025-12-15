@@ -4,7 +4,7 @@ title: Day 12 - Christmas Tree Farm
 nav_order: 12
 ---
 
-[← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/12) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day12/Day12.java) | [🎨 Interactive Visualization](visualizations/day12-visualization.html) | [← Back to Home](../index.html)
 
 # Day 12: Christmas Tree Farm
 

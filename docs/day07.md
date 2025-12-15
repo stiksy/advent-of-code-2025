@@ -4,11 +4,9 @@ title: Day 7 - Laboratories
 nav_order: 7
 ---
 
-[← Back to Home](../index.html)
-
 # Day 7: Laboratories
 
-[View Source Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day07/Day07.java)
+[Puzzle Link](https://adventofcode.com/2025/day/7) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day07/Day07.java) | [🎨 Interactive Visualization](visualizations/day07-visualization.html) | [← Back to Home](../index.html)
 
 ## Problem Description
 

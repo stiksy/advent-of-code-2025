@@ -4,7 +4,7 @@ title: Day 10 - Factory
 nav_order: 10
 ---
 
-[← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/10) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day10/Day10.java) | [🎨 Interactive Visualization](visualizations/day10-visualization.html) | [← Back to Home](../index.html)
 
 # Day 10: Factory
 

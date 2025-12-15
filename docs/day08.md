@@ -4,7 +4,7 @@ title: Day 8 - Playground
 nav_order: 8
 ---
 
-[← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/8) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day08/Day08.java) | [🎨 Interactive Visualization](visualizations/day08-visualization.html) | [← Back to Home](../index.html)
 
 # Day 8: Playground
 

@@ -4,7 +4,7 @@ title: Day 11 - Reactor
 nav_order: 11
 ---
 
-[← Back to Home](../index.html)
+[Puzzle Link](https://adventofcode.com/2025/day/11) | [Solution Code](https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day11/Day11.java) | [🎨 Interactive Visualization](visualizations/day11-visualization.html) | [← Back to Home](../index.html)
 
 # Day 11: Reactor
 

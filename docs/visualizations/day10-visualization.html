@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 10 - Factory Visualization</title>
+    <link rel="stylesheet" href="visualization-styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏭 Day 10: Factory</h1>
+        <p class="subtitle">Gaussian Elimination over GF(2)</p>
+
+        <div class="info-panel">
+            <p>Day 10 involves solving a system of linear equations over GF(2) (binary field) using Gaussian elimination.</p>
+            <p><strong>Key Concepts:</strong></p>
+            <ul style="text-align: left; margin: 10px auto; max-width: 600px;">
+                <li>Build augmented matrix from button-light relationships</li>
+                <li>Perform row reduction using XOR operations (GF(2))</li>
+                <li>Transform matrix to row echelon form</li>
+                <li>Back-substitute to find solution</li>
+                <li>Count minimum button presses needed</li>
+            </ul>
+            <p>See the <a href="https://github.com/stiksy/advent-of-code-2025/blob/main/src/main/com/stiksy/aoc2025/day10/Day10.java" target="_blank">solution code</a> for the complete implementation.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Algorithm</div>
+                <div class="stat-value" style="font-size: 1.2em;">Gaussian Elim.</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Field</div>
+                <div class="stat-value" style="font-size: 1.2em;">GF(2)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Complexity</div>
+                <div class="stat-value" style="font-size: 1.2em;">O(n³)</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
